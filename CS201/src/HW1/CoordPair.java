@@ -2,6 +2,8 @@ package HW1;
 
 import java.util.Random;
 
+//this is a change
+
 public class CoordPair 
 {
 	private int row;
@@ -48,4 +50,5 @@ public class CoordPair
 	{
 		return col;
 	}
+	
 }
