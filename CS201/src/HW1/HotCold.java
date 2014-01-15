@@ -9,26 +9,42 @@ public class HotCold
 	static boolean admin = false;
 	static CoordPair currentGuess = null;
 	static CoordPair lastGuess = null;
+	static boolean foundIt = false;
+	static boolean playing = true;
 	public static void main(String[] args) 
 	{
 		scan = new Scanner(System.in);
 		
 
 		
-		System.out.println("Welcome to the hotter/colder game");
+		System.out.println("Welcome to the hotter/colder game! ");
 		
-		createGrid();
-		
-		hidingPlace = new CoordPair();
-		
-		System.out.print("Do you have anything else to tell me? ");
-		if(scan.next().equalsIgnoreCase("a")) 
-			admin = true;
-			
-		if(admin)
+		while(playing)
 		{
-			System.out.println("Ahh you're an administrator. The random location is "+hidingPlace.getRow()+", "+hidingPlace.getCol());
-
+			createGrid();
+			
+			hidingPlace = new CoordPair();
+			
+			System.out.print("Do you have anything else to tell me? ");
+			if(scan.next().equalsIgnoreCase("a")) 
+				admin = true;
+				
+			if(admin)
+			{
+				System.out.println("Ahh you're an administrator. The random location is "+hidingPlace.getRow()+", "+hidingPlace.getCol());
+	
+			}
+			
+			while(!foundIt)
+			{
+				getGuess();
+			}
+			
+			System.out.print("Would you like to play again? ");
+			if(!scan.next().equalsIgnoreCase("y"))
+				playing = false;
+			else
+				foundIt = false;
 		}
 		
 		
@@ -51,7 +67,7 @@ public class HotCold
 
 		if(lastGuess == null)
 		{
-			System.out.print("What is your first guess?");
+			System.out.print("What is your first guess? ");
 			int row = scan.nextInt();
 			int col = scan.nextInt();
 			currentGuess = new CoordPair(row,col);
@@ -59,10 +75,11 @@ public class HotCold
 		}
 		lastGuess = currentGuess;
 		
-		System.out.print("What is your next guess?");
+		System.out.print("What is your next guess? ");
 		int row = scan.nextInt();
 		int col = scan.nextInt();
 		currentGuess = new CoordPair(row,col);
+		hotterOrColder();
 		
 		
 	}
@@ -75,7 +92,23 @@ public class HotCold
 		}
 		if(lastGuess != null)
 		{
-			
+			if(hidingPlace.getDistanceTo(currentGuess) == 0)
+			{
+				foundIt = true;
+				System.out.println("You found it!");
+			}
+			else if(hidingPlace.getDistanceTo(currentGuess) < hidingPlace.getDistanceTo(lastGuess)  )
+			{
+				System.out.println("You're getting warmer!");
+			}
+			else if(hidingPlace.getDistanceTo(currentGuess) > hidingPlace.getDistanceTo(lastGuess)  )
+			{
+				System.out.println("You're getting colder!");
+			}
+			else if(hidingPlace.getDistanceTo(currentGuess) == hidingPlace.getDistanceTo(lastGuess)  )
+			{
+				System.out.println("You're not getting warmer or colder!");
+			}
 		}
 	}
 	
