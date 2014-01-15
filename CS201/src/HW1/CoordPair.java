@@ -32,12 +32,28 @@ public class CoordPair
 	
 	public double getDistanceTo(CoordPair dest)
 	{
+		if(isAdjacent(dest))
+			return 1;
 		int rowDiff = this.row - dest.getRow();
 		int colDiff = this.col - dest.getCol();
 		int sumSquares = (int) (Math.pow(rowDiff,2) + Math.pow(colDiff, 2));
 		double distance = Math.sqrt(sumSquares);
 		
 		return distance;
+	}
+	
+	public boolean isAdjacent(CoordPair other)
+	{
+		if(this.row+1 == other.getRow() && this.col+1 == other.getCol())
+			return true;
+		if(this.row+1 == other.getRow() && this.col-1 == other.getCol() )
+			return true;
+		if(this.row-1 == other.getRow() && this.col+1 == other.getCol() )
+			return true;
+		if(this.row-1 == other.getRow() && this.col-1 == other.getCol() )
+			return true;
+		else
+			return false;
 	}
 	
 	public int getRow()

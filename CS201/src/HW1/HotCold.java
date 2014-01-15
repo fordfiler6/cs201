@@ -19,11 +19,11 @@ public class HotCold
 		
 		while(playing)
 		{
-			createGrid();
+			createPlayingGrid();
 			
 			initializeHidingPlace();
 			
-			processAdmin();
+			processAdminRights();
 			
 			while(!foundIt)
 			{
@@ -37,7 +37,7 @@ public class HotCold
 				foundIt = false;
 		}
 		
-		
+		scan.close();
 		
 	}
 	
@@ -46,11 +46,13 @@ public class HotCold
 		hidingPlace = new CoordPair();
 	}
 	
-	private static void processAdmin()
+	private static void processAdminRights()
 	{
 		System.out.print("Do you have anything else to tell me? ");
 		if(scan.next().equalsIgnoreCase("a")) 
 			admin = true;
+		else
+			admin = false;
 			
 		if(admin)
 		{
@@ -59,7 +61,7 @@ public class HotCold
 		}
 	}
 
-	private static void createGrid()
+	private static void createPlayingGrid()
 	{
 		System.out.print("How many rows are in the grid? ");
 		int numRows = scan.nextInt();
@@ -96,16 +98,20 @@ public class HotCold
 	{
 		if(admin)
 		{
-			System.out.println("Distance = " + hidingPlace.getDistanceTo(lastGuess));
+			System.out.println("Distance = " + hidingPlace.getDistanceTo(currentGuess));
 		}
-		if(lastGuess != null)
+		if(hidingPlace.getDistanceTo(currentGuess) == 0)
 		{
-			if(hidingPlace.getDistanceTo(currentGuess) == 0)
-			{
-				foundIt = true;
-				System.out.println("You found it!");
-			}
-			else if(hidingPlace.getDistanceTo(currentGuess) < hidingPlace.getDistanceTo(lastGuess)  )
+			foundIt = true;
+			System.out.println("You found it!");
+		}
+		else if(hidingPlace.getDistanceTo(currentGuess) == 1)
+		{
+			System.out.println("You're on fire!");
+		}
+		else if(lastGuess != null)
+		{
+			if(hidingPlace.getDistanceTo(currentGuess) < hidingPlace.getDistanceTo(lastGuess)  )
 			{
 				System.out.println("You're getting warmer!");
 			}
@@ -113,15 +119,12 @@ public class HotCold
 			{
 				System.out.println("You're getting colder!");
 			}
-			else if(hidingPlace.getDistanceTo(currentGuess) == hidingPlace.getDistanceTo(lastGuess)  )
+			else if(hidingPlace.getDistanceTo(currentGuess) == hidingPlace.getDistanceTo(lastGuess))
 			{
 				System.out.println("You're not getting warmer or colder!");
 			}
+			
 		}
 	}
-	
-	
-
-	
 
 }
