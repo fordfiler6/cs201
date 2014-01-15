@@ -32,6 +32,7 @@ public class CoordPair
 	
 	public double getDistanceTo(CoordPair dest)
 	{
+		//allow for diagonals to count as distance of 1
 		if(isAdjacent(dest))
 			return 1;
 		int rowDiff = this.row - dest.getRow();
