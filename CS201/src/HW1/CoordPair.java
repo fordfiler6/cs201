@@ -2,7 +2,7 @@ package HW1;
 
 import java.util.Random;
 
-//this is a change2
+//this is a changer
 
 public class CoordPair 
 {
