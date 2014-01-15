@@ -15,25 +15,15 @@ public class HotCold
 	{
 		scan = new Scanner(System.in);
 		
-
-		
 		System.out.println("Welcome to the hotter/colder game! ");
 		
 		while(playing)
 		{
 			createGrid();
 			
-			hidingPlace = new CoordPair();
+			initializeHidingPlace();
 			
-			System.out.print("Do you have anything else to tell me? ");
-			if(scan.next().equalsIgnoreCase("a")) 
-				admin = true;
-				
-			if(admin)
-			{
-				System.out.println("Ahh you're an administrator. The random location is "+hidingPlace.getRow()+", "+hidingPlace.getCol());
-	
-			}
+			processAdmin();
 			
 			while(!foundIt)
 			{
@@ -49,6 +39,24 @@ public class HotCold
 		
 		
 		
+	}
+	
+	private static void initializeHidingPlace()
+	{
+		hidingPlace = new CoordPair();
+	}
+	
+	private static void processAdmin()
+	{
+		System.out.print("Do you have anything else to tell me? ");
+		if(scan.next().equalsIgnoreCase("a")) 
+			admin = true;
+			
+		if(admin)
+		{
+			System.out.println("Ahh you're an administrator. The random location is "+hidingPlace.getRow()+", "+hidingPlace.getCol());
+
+		}
 	}
 
 	private static void createGrid()
