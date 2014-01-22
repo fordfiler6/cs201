@@ -70,6 +70,10 @@ public class HotCold
 		
 		CoordPair.setGridSize(numRows, numCols);
 		
+		foundIt = false;
+		lastGuess = null;
+		currentGuess = null;
+		
 	}
 	
 	private static void getGuess()
@@ -83,14 +87,16 @@ public class HotCold
 			currentGuess = new CoordPair(row,col);
 			hotterOrColder();
 		}
-		lastGuess = currentGuess;
-		
-		System.out.print("What is your next guess? ");
-		int row = scan.nextInt();
-		int col = scan.nextInt();
-		currentGuess = new CoordPair(row,col);
-		hotterOrColder();
-		
+		if(!foundIt)
+		{
+			lastGuess = currentGuess;
+			
+			System.out.print("What is your next guess? ");
+			int row = scan.nextInt();
+			int col = scan.nextInt();
+			currentGuess = new CoordPair(row,col);
+			hotterOrColder();
+		}
 		
 	}
 
