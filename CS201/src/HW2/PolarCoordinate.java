@@ -4,7 +4,7 @@ import HW2.PolarCoordinate;
 
 public class PolarCoordinate extends Coordinate 
 {
-
+	boolean radians;
 	public PolarCoordinate(double r, double theta)
 	{
 		super(r, theta);
@@ -18,6 +18,10 @@ public class PolarCoordinate extends Coordinate
 		double rad1Sq = Math.pow(rad1, 2);
 		double rad2Sq = Math.pow(rad2, 2);
 		double thetaDiff = this.getValue2()-c.getValue2();
+		if(!radians)
+		{
+			thetaDiff = Math.toRadians(thetaDiff);
+		}
 		double cosThetaDiff = Math.cos(thetaDiff);
 		double radicand = rad1Sq + rad2Sq - (2*rad1*rad2*cosThetaDiff);
 		double distance = Math.sqrt(radicand);
@@ -44,6 +48,11 @@ public class PolarCoordinate extends Coordinate
 	{
 		double r = this.getValue1();
 		double theta = this.getValue2();
+		
+		if(!radians)
+		{
+			theta = Math.toRadians(theta);
+		}
 		double x = r*Math.cos(theta);
 		double y = r*Math.sin(theta);
 		
