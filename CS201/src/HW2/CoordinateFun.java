@@ -26,6 +26,10 @@ public class CoordinateFun
 				break;
 		}
 	}
+	private static MenuOption polarMenu()
+	{
+		
+	}
 	private static MenuOption mainMenu()
 	{
 		MenuOption selectedOption = MenuOption.EXIT;
