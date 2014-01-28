@@ -34,7 +34,7 @@ public class CartesianCoordinate extends Coordinate
 		CartesianCoordinate origin = new CartesianCoordinate(0,0);
 		double r = this.getDistance(origin);
 		double theta = Math.atan2(this.getValue2(), this.getValue1());
-		
+		theta = Math.toDegrees(theta);
 		return new PolarCoordinate(r,theta);
 		
 	}
