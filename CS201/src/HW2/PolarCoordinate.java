@@ -9,6 +9,11 @@ public class PolarCoordinate extends Coordinate
 		super(r, theta);
 	}
 
+	public PolarCoordinate() 
+	{
+		super();
+	}
+
 	@Override
 	public double getDistance(Coordinate c) 
 	{

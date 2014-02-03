@@ -8,6 +8,10 @@ public abstract class Coordinate
 		value1 = val1;
 		value2 = val2;
 	}
+	public Coordinate() 
+	{
+		
+	}
 	public abstract double getDistance(Coordinate c); 
 	public abstract double getSlopeOfLine(Coordinate c); 
 	protected double getValue1()
@@ -17,6 +21,14 @@ public abstract class Coordinate
 	protected double getValue2()
 	{
 		return value2;
+	}
+	protected void setValue1(double newValue1)
+	{
+		value1 = newValue1;
+	}
+	protected void setValue2(double newValue2)
+	{
+		value2 = newValue2;
 	}
 
 }

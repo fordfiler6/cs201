@@ -6,6 +6,10 @@ public class DegreePolarCoordinate extends PolarCoordinate {
 	{
 		super(r, theta);
 	}
+	public DegreePolarCoordinate() 
+	{
+		super();
+	}
 	@Override
 	public double getDistance(Coordinate c)
 	{
