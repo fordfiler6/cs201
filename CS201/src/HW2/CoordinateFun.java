@@ -10,7 +10,7 @@ public class CoordinateFun
 	static MenuOption selection;
 	public static void main(String[] args)
 	{
-		
+		menu();
 	}
 	private static void menu()
 	{
@@ -43,7 +43,10 @@ public class CoordinateFun
 		boolean stay = true;
 		while(stay)
 		{
-			System.out.println("[convert] Convert to Polar coordinates");
+			if(selection == MenuOption.CARTESIAN)
+				System.out.println("[convert] Convert to Polar coordinates");
+			else if(selection == MenuOption.RADIANS || selection == MenuOption.DEGREES)
+				System.out.println("[convert] Convert to Cartesian coordinates");
 			System.out.println("[distance] Find the distance between the two points"); 
 			System.out.println("[slope] Find the slope of the line between the points"); 
 			System.out.println("[equation] Find the equation of the line between the points"); 
@@ -77,6 +80,8 @@ public class CoordinateFun
 
 						selection = MenuOption.DEGREES;
 					}
+					coordinates.coord1 = coord1;
+					coordinates.coord2 = coord2;
 					
 				}
 				else if(userInput.equalsIgnoreCase("distance"))
@@ -96,6 +101,7 @@ public class CoordinateFun
 				}
 				else if(userInput.equalsIgnoreCase("menu"))
 				{
+					selection = mainMenu();
 					valid = true;
 					stay = false;
 				}

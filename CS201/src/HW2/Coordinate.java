@@ -30,5 +30,9 @@ public abstract class Coordinate
 	{
 		value2 = newValue2;
 	}
+	public String toString()
+	{
+		return "("+value1+","+value2+")";
+	}
 
 }

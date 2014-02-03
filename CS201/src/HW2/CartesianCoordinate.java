@@ -35,7 +35,13 @@ public class CartesianCoordinate extends Coordinate
 		double r = this.getDistance(origin);
 		double theta = Math.atan2(this.getValue2(), this.getValue1());
 		theta = Math.toDegrees(theta);
-		return new PolarCoordinate(r,theta);
+		
+		PolarCoordinate polarVersion = new PolarCoordinate(r,theta);
+		
+		System.out.println("The polar coordinate for "+this+" is "+polarVersion);
+		
+		return polarVersion;
+		
 		
 	}
 
