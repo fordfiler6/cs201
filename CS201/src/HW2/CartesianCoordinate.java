@@ -8,6 +8,10 @@ public class CartesianCoordinate extends Coordinate
 		super(x, y);
 	}
 
+	public CartesianCoordinate() 
+	{
+	}
+
 	@Override
 	public double getDistance(Coordinate c) 
 	{
@@ -35,7 +39,7 @@ public class CartesianCoordinate extends Coordinate
 		double r = this.getDistance(origin);
 		double theta = Math.atan2(this.getValue2(), this.getValue1());
 		theta = Math.toDegrees(theta);
-		
+		if(theta<0) theta+=360;
 		PolarCoordinate polarVersion = new PolarCoordinate(r,theta);
 			
 		return polarVersion;
@@ -48,8 +52,10 @@ public class CartesianCoordinate extends Coordinate
 	{
 		double slope = this.getSlopeOfLine(c);
 		double intercept = (slope*-1)*this.getValue1() + this.getValue2();
-		
-		return "y = "+df.format(slope)+"x + "+df.format(intercept);
+		String sign = "+";
+		if(intercept<0)
+			sign = "-";
+		return "y = "+df.format(slope)+"x "+sign+" "+df.format(Math.abs(intercept));
 
 	}
 

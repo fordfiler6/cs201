@@ -50,6 +50,8 @@ public class CoordinateFun
 			{
 				String convertTo = "";
 				String type = "";
+				Coordinate converted1 = coord1;
+				Coordinate converted2 = coord2;
 				if(selection == MenuOption.CARTESIAN)
 				{
 					convertTo="Polar";
@@ -75,32 +77,30 @@ public class CoordinateFun
 					valid = true;
 					if(selection == MenuOption.DEGREES)
 					{
-						coord1 = ((DegreePolarCoordinate) coord1).convertToCartesian();
-						coord2 = ((DegreePolarCoordinate) coord2).convertToCartesian();
+						converted1 = ((DegreePolarCoordinate) coord1).convertToCartesian();
+						converted2 = ((DegreePolarCoordinate) coord2).convertToCartesian();
 
-						selection = MenuOption.CARTESIAN;
+						//selection = MenuOption.CARTESIAN;
 					}
 					else if(selection == MenuOption.RADIANS)
 					{
-						coord1 = ((PolarCoordinate) coord1).convertToCartesian();
-						coord2 = ((PolarCoordinate) coord2).convertToCartesian();
+						converted1 = ((PolarCoordinate) coord1).convertToCartesian();
+						converted2 = ((PolarCoordinate) coord2).convertToCartesian();
 
-						selection = MenuOption.CARTESIAN;
+						//selection = MenuOption.CARTESIAN;
 					}
 					else if(selection == MenuOption.CARTESIAN)
 					{
-						coord1 = ((CartesianCoordinate) coord1).convertToPolar();
-						coord2 = ((CartesianCoordinate) coord2).convertToPolar();
+						converted1 = ((CartesianCoordinate) coord1).convertToPolar();
+						converted2 = ((CartesianCoordinate) coord2).convertToPolar();
 
-						selection = MenuOption.DEGREES;
+						//selection = MenuOption.DEGREES;
 					}
 
-					System.out.println("The "+convertTo+" coordinate for "+coordinates.coord1+" is "+coord1);
-					System.out.println("The "+convertTo+" coordinate for "+coordinates.coord2+" is "+coord2);
+					System.out.println("The "+convertTo+" coordinate for "+coordinates.coord1+" is "+converted1);
+					System.out.println("The "+convertTo+" coordinate for "+coordinates.coord2+" is "+converted2);
 					System.out.println();
-					
-					coordinates.coord1 = coord1;
-					coordinates.coord2 = coord2;
+	
 					
 					
 				}
@@ -172,6 +172,9 @@ public class CoordinateFun
 		}
 		else if(coordinateStyle == MenuOption.CARTESIAN)
 		{
+			inputCoords.coord1 = new CartesianCoordinate();
+			inputCoords.coord2 = new CartesianCoordinate();
+			
 			System.out.print("Coordinate 1 - Please enter x: ");
 			inputCoords.coord1.setValue1(scan.nextDouble());
 			System.out.print("Coordinate 1 - Please enter y: ");
