@@ -20,7 +20,7 @@ public class EnhancedScanner
 		Double inDouble = null;
 		while(inDouble == null)
 		{
-			inStr = scan.next();
+			inStr = next();
 			try
 			{
 				inDouble = Double.parseDouble(inStr);
