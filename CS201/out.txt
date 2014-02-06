@@ -1,0 +1,18 @@
+The Cartesian coordinate for (3.5, 60) is (1.75, 3.03)
+The Cartesian coordinate for (5, 90) is (0, 5)
+
+The distance between the Polar coordinates (3.5, 60) and (5, 90) is 2.63
+
+The slope of the line between the Polar coordinates (3.5, 60) and (5, 90) is -1.13
+
+The eqation of the line between the points is y = -1.13x + 5
+
+The Polar coordinate for (2, 3) is (3.61, 56.31)
+The Polar coordinate for (-5, -8) is (9.43, 237.99)
+
+The distance between the Cartesian coordinates (2, 3) and (-5, -8) is 13.04
+
+The slope of the line between the Cartesian coordinates (2, 3) and (-5, -8) is 1.57
+
+The eqation of the line between the points is y = 1.57x - 0.14
+

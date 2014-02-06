@@ -5,13 +5,17 @@ import java.util.Scanner;
 public class EnhancedScanner
 {
 	Scanner scan;
-	EnhancedScanner(InputStream in)
+	public EnhancedScanner(InputStream in)
 	{
 		scan = new Scanner(in);
 	}
 	public String next()
 	{
 		return scan.next();
+	}
+	public String nextLine()
+	{
+		return scan.nextLine();
 	}
 
 	public double nextDouble()
@@ -31,5 +35,21 @@ public class EnhancedScanner
 			}
 		}
 		return (double)inDouble;
+	}
+	public boolean tryParseDouble(String toBeParsed)
+	{
+		try
+		{
+			Double.parseDouble(toBeParsed);
+			return true;
+		}
+		catch(NumberFormatException nfe)
+		{
+			return false;
+		}
+	}
+	public boolean hasNext()
+	{
+		return scan.hasNext();
 	}
 }
