@@ -1,13 +1,15 @@
 package HW2;
 
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 
 
 public class CoordinateFun 
 {
-	static Scanner scan = new Scanner(System.in);
+	static EnhancedScanner scan = new EnhancedScanner(System.in);
 	static MenuOption selection;
+	static DecimalFormat df = new DecimalFormat("#.##");
 	public static void main(String[] args)
 	{
 		menu();
@@ -43,19 +45,31 @@ public class CoordinateFun
 		boolean stay = true;
 		while(stay)
 		{
-			if(selection == MenuOption.CARTESIAN)
-				System.out.println("[convert] Convert to Polar coordinates");
-			else if(selection == MenuOption.RADIANS || selection == MenuOption.DEGREES)
-				System.out.println("[convert] Convert to Cartesian coordinates");
-			System.out.println("[distance] Find the distance between the two points"); 
-			System.out.println("[slope] Find the slope of the line between the points"); 
-			System.out.println("[equation] Find the equation of the line between the points"); 
-			System.out.println("[menu] Return to main menu");
 			boolean valid = false;
 			while(!valid)
 			{
+				String convertTo = "";
+				String type = "";
+				if(selection == MenuOption.CARTESIAN)
+				{
+					convertTo="Polar";
+					type="Cartesian";
+				}
+				else if(selection == MenuOption.RADIANS || selection == MenuOption.DEGREES)
+				{
+					convertTo = "Cartesian";
+					type="Polar";
+				}
+				System.out.println("[convert] Convert to "+convertTo+" coordinates");
+				System.out.println("[distance] Find the distance between the two points"); 
+				System.out.println("[slope] Find the slope of the line between the points"); 
+				System.out.println("[equation] Find the equation of the line between the points"); 
+				System.out.println("[menu] Return to main menu");
+				System.out.println();
+			
 				System.out.print("What would you like to do?");
-				String userInput = scan.nextLine();
+				String userInput = scan.next();
+				System.out.println();
 				if(userInput.equalsIgnoreCase("convert"))
 				{
 					valid = true;
@@ -80,30 +94,50 @@ public class CoordinateFun
 
 						selection = MenuOption.DEGREES;
 					}
+
+					System.out.println("The "+convertTo+" coordinate for "+coordinates.coord1+" is "+coord1);
+					System.out.println("The "+convertTo+" coordinate for "+coordinates.coord2+" is "+coord2);
+					System.out.println();
+					
 					coordinates.coord1 = coord1;
 					coordinates.coord2 = coord2;
+					
 					
 				}
 				else if(userInput.equalsIgnoreCase("distance"))
 				{
 					valid = true;
+					double dist = coord1.getDistance(coord2);
+					System.out.println("The distance between the "+type+" coordinates "+coord1+" and "+coord2+" is "+df.format(dist));
+					System.out.println();
 
 				}
 				else if(userInput.equalsIgnoreCase("slope"))
 				{
 					valid = true;
+					double slope = coord1.getSlopeOfLine(coord2);
+					
+					System.out.println("The slope of the line between the "+type+" coordinates "+coord1+" and "+coord2+" is "+df.format(slope));
+					System.out.println();
+					
 
 				}
 				else if(userInput.equalsIgnoreCase("equation"))
 				{
 					valid = true;
-
+					String equation = coord1.getEquationOfLine(coord2);
+					System.out.println("The eqation of the line between the points is "+equation);
+					System.out.println();
 				}
 				else if(userInput.equalsIgnoreCase("menu"))
 				{
 					selection = mainMenu();
 					valid = true;
 					stay = false;
+				}
+				else
+				{
+					System.out.println("Please enter one of the options provided.\n");
 				}
 			}
 		}
@@ -147,6 +181,7 @@ public class CoordinateFun
 			System.out.print("Coordinate 2 – Please enter y: ");
 			inputCoords.coord2.setValue2(scan.nextDouble());
 		}
+		System.out.println();
 		return inputCoords;
 	}
 
@@ -159,8 +194,10 @@ public class CoordinateFun
 		{
 			System.out.println("[degrees] Degrees");
 			System.out.println("[radians] Radians");
+			System.out.println("");
 			System.out.print("What type of Angle? ");
-			String userInput = scan.nextLine();
+			String userInput = scan.next();
+			System.out.println("");
 			if(userInput.equalsIgnoreCase("degrees"))
 			{
 				valid = true;
@@ -191,11 +228,13 @@ public class CoordinateFun
 			System.out.println("[polar] Polar Coordinates (r, theta)");
 			System.out.println("[cartesian] Cartesian Coordinates (x, y)");
 			System.out.println("[file] File Input");
-			System.out.println("[exit] Exit program");
+			System.out.println("[exit] Exit program\n");
 
 		
 			System.out.print("What type of coordinates? ");
-			String userInput = scan.nextLine();
+			String userInput = scan.next();
+			System.out.println("");
+
 			if(userInput.equalsIgnoreCase("polar"))
 			{
 				selectedOption = MenuOption.POLAR;
@@ -218,7 +257,7 @@ public class CoordinateFun
 			}
 			if(!valid)
 			{
-				System.out.println("Please enter one of the options provided.");
+				System.out.println("Please enter one of the options provided.\n");
 			}
 				
 		}

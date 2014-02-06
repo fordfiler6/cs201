@@ -37,12 +37,20 @@ public class CartesianCoordinate extends Coordinate
 		theta = Math.toDegrees(theta);
 		
 		PolarCoordinate polarVersion = new PolarCoordinate(r,theta);
-		
-		System.out.println("The polar coordinate for "+this+" is "+polarVersion);
-		
+			
 		return polarVersion;
 		
 		
+	}
+
+	@Override
+	public String getEquationOfLine(Coordinate c) 
+	{
+		double slope = this.getSlopeOfLine(c);
+		double intercept = (slope*-1)*this.getValue1() + this.getValue2();
+		
+		return "y = "+df.format(slope)+"x + "+df.format(intercept);
+
 	}
 
 }

@@ -22,7 +22,7 @@ public class PolarCoordinate extends Coordinate
 	public double getDistance(Coordinate c, boolean degrees) 
 	{
 		double rad1 = this.getValue1();
-		double rad2 = this.getValue1();
+		double rad2 = c.getValue1();
 		double rad1Sq = Math.pow(rad1, 2);
 		double rad2Sq = Math.pow(rad2, 2);
 		double thetaDiff = this.getValue2()-c.getValue2();
@@ -69,6 +69,19 @@ public class PolarCoordinate extends Coordinate
 		double y = r*Math.sin(theta);
 		
 		return new CartesianCoordinate(x,y);
+	}
+
+	@Override
+	public String getEquationOfLine(Coordinate c) 
+	{
+		Coordinate cart1 = this.convertToCartesian();
+		Coordinate cart2 = ((PolarCoordinate)c).convertToCartesian();
+		
+		double slope = cart1.getSlopeOfLine(cart2);
+		double intercept = (slope*-1)*cart1.getValue1() + cart1.getValue2();
+		
+		return "y = "+df.format(slope)+"x + "+df.format(intercept);
+
 	}
 
 }

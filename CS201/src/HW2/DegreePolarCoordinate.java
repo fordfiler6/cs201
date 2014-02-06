@@ -20,4 +20,17 @@ public class DegreePolarCoordinate extends PolarCoordinate {
 	{
 		return super.convertToCartesian(true);
 	}
+	
+	@Override
+	public String getEquationOfLine(Coordinate c) 
+	{
+		Coordinate cart1 = this.convertToCartesian();
+		Coordinate cart2 = ((DegreePolarCoordinate)c).convertToCartesian();
+		
+		double slope = cart1.getSlopeOfLine(cart2);
+		double intercept = (slope*-1)*cart1.getValue1() + cart1.getValue2();
+		
+		return "y = "+df.format(slope)+"x + "+df.format(intercept);
+
+	}
 }
