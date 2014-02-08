@@ -68,6 +68,7 @@ public class CoordinateFun
 		{
 			System.out.println("File was parsed and output generated.");
 			System.out.println();
+			selection = mainMenu();
 		}
 	}
 	private static boolean processFile(File in, File out)
@@ -91,7 +92,7 @@ public class CoordinateFun
 		} 
 		catch (FileNotFoundException e) 
 		{
-			System.out.println("We're having trouble writing to the file.");
+			System.out.println("We're having trouble writing to the file.\n");
 			return false;
 
 		}
@@ -118,7 +119,7 @@ public class CoordinateFun
 				}
 				else
 				{
-					System.out.println("Trouble with file input: " + readIn);
+					System.out.println("Trouble with file input: " + readIn+"\n");
 					return false;
 				}
 			}
@@ -130,21 +131,18 @@ public class CoordinateFun
 			}
 			else
 			{
-				System.out.println("Trouble with file input: " + readIn);
+				System.out.println("Trouble with file input: " + readIn+"\n");
 				return false;
 			}
-			System.out.println("ready to gather");
 			if(!gatherCoordinates(fileCoordinates.coord1,inFile))
 			{
 				return false;
 			}
-			System.out.println("ready to gather");
 
 			if(!gatherCoordinates(fileCoordinates.coord2,inFile))
 			{
 				return false;
 			}
-			System.out.println("ready to writes");
 
 			if(!writeFile(fileCoordinates, writer, fileCoordinateType))
 			{
@@ -171,7 +169,6 @@ public class CoordinateFun
 			line=inFile.nextLine();
 		}
 		
-		System.out.println(line);
 		double num1 =0,num2=0;
 		StringTokenizer tokenizer = new StringTokenizer(line,", ");
 		if(tokenizer.hasMoreTokens())
@@ -248,7 +245,9 @@ public class CoordinateFun
 			writer.write("\n");
 			writer.write("The slope of the line between the "+type+" coordinates "+coord1+" and "+coord2+" is "+df.format(coord1.getSlopeOfLine(coord2))+"\n");
 			writer.write("\n");
-			writer.write("The eqation of the line between the points is "+coord1.getEquationOfLine(coord2)+"\n");
+			writer.write("The equation of the line between the points is "+coord1.getEquationOfLine(coord2)+"\n");
+			writer.write("\n");
+			writer.write("---\n");
 			writer.write("\n");
 			return true;
 
@@ -256,7 +255,7 @@ public class CoordinateFun
 		}
 		catch (IOException e) 
 		{
-			System.out.println("We're having trouble writing to the file.");
+			System.out.println("We're having trouble writing to the file.\n");
 			return false;
 		}
 		
@@ -295,6 +294,10 @@ public class CoordinateFun
 			
 				System.out.print("What would you like to do?");
 				String userInput = scan.next();
+				if(!scan.nextLine().equals(""))
+				{
+					userInput="invalid";
+				}
 				System.out.println();
 				if(userInput.equalsIgnoreCase("convert"))
 				{
@@ -340,8 +343,15 @@ public class CoordinateFun
 				{
 					valid = true;
 					double slope = coord1.getSlopeOfLine(coord2);
-					
-					System.out.println("The slope of the line between the "+type+" coordinates "+coord1+" and "+coord2+" is "+df.format(slope));
+			
+					if(Double.isNaN(slope) || Double.isInfinite(slope))
+					{
+						System.out.println("The slope of the line between the "+type+" coordinates "+coord1+" and "+coord2+" is undefined");
+					}
+					else
+					{
+						System.out.println("The slope of the line between the "+type+" coordinates "+coord1+" and "+coord2+" is "+df.format(slope));
+					}
 					System.out.println();
 					
 
@@ -350,6 +360,18 @@ public class CoordinateFun
 				{
 					valid = true;
 					String equation = coord1.getEquationOfLine(coord2);
+					double slope = coord1.getSlopeOfLine(coord2);
+					if(Double.isNaN(slope) || Double.isInfinite(slope))
+					{
+						if(Double.isInfinite(slope))
+						{
+							equation = "x = "+coord1.getValue1();
+						}
+						else
+						{
+							equation = "undefined";
+						}
+					}
 					System.out.println("The eqation of the line between the points is "+equation);
 					System.out.println();
 				}
@@ -424,6 +446,10 @@ public class CoordinateFun
 			System.out.println("");
 			System.out.print("What type of Angle? ");
 			String userInput = scan.next();
+			if(!scan.nextLine().equals(""))
+			{
+				userInput="invalid";
+			}
 			System.out.println("");
 			if(userInput.equalsIgnoreCase("degrees"))
 			{
@@ -439,6 +465,7 @@ public class CoordinateFun
 			if(!valid)
 			{
 				System.out.println("Please enter one of the options provided.");
+				
 			}
 
 		}
@@ -485,6 +512,7 @@ public class CoordinateFun
 			if(!valid)
 			{
 				System.out.println("Please enter one of the options provided.\n");
+				scan.nextLine();
 			}
 				
 		}

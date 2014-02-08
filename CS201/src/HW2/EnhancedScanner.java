@@ -25,13 +25,17 @@ public class EnhancedScanner
 		while(inDouble == null)
 		{
 			inStr = next();
+			if(!nextLine().equals(""))
+			{
+				inStr = "invalid";
+			}
 			try
 			{
 				inDouble = Double.parseDouble(inStr);
 			}
 			catch (NumberFormatException nfe)
 			{
-				System.out.print("Please enter a valid number: ");
+				System.out.print("Please enter only a valid number: ");
 			}
 		}
 		return (double)inDouble;

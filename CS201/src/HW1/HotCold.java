@@ -1,5 +1,6 @@
 package HW1;
 
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 public class HotCold 
@@ -11,6 +12,7 @@ public class HotCold
 	static CoordPair lastGuess = null;
 	static boolean foundIt = false;
 	static boolean playing = true;
+	static DecimalFormat twoPlaces = new DecimalFormat("0.00");
 	public static void main(String[] args) 
 	{
 		scan = new Scanner(System.in);
@@ -104,7 +106,7 @@ public class HotCold
 	{
 		if(admin)
 		{
-			System.out.println("Distance = " + hidingPlace.getDistanceTo(currentGuess));
+			System.out.println("Distance = " + twoPlaces.format(hidingPlace.getDistanceTo(currentGuess)));
 		}
 		if(hidingPlace.getDistanceTo(currentGuess) == 0)
 		{
