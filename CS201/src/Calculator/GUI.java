@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -31,6 +32,8 @@ public class GUI extends JFrame
 	private static final int TEXT_PANEL_HEIGHT = 150;
 	private static final int INPUT_TEXT_HEIGHT = 100;
 	private static final int EQUATION_HEIGHT = TEXT_PANEL_HEIGHT - INPUT_TEXT_HEIGHT;
+	
+	private static final int CONTROL_PANEL_HEIGHT = APP_HEIGHT-(Y_PADDING*3)-TEXT_PANEL_HEIGHT;
 
 	JLabel debug;
 	GUI()
@@ -61,14 +64,23 @@ public class GUI extends JFrame
 		main.setLayout(null);
 		
 
-		
-		
-		
 		main.add(generateTextDisplay());
+		main.add(generateControlPanel());
 		
 		
 		return main;
 	}
+	
+	private CalculatorButton[][] generateButtonArray()
+	{
+		CalculatorButton[][] buttons = 
+			{
+				{ },
+				{ }
+			
+			};
+	}
+	
 	private JPanel generateTextDisplay()
 	{
 		JPanel textDisplay = new JPanel();
@@ -98,6 +110,29 @@ public class GUI extends JFrame
 		
 		return textDisplay;
 	}
+	
+	private JPanel generateControlPanel()
+	{
+		JPanel controlPanel = new JPanel();
+		controlPanel.setSize(INNER_PANEL_WIDTH,CONTROL_PANEL_HEIGHT);
+		controlPanel.setLocation(X_PADDING, Y_PADDING+TEXT_PANEL_HEIGHT);
+		controlPanel.setLayout(new GridBagLayout());
+		
+		GridBagConstraints c = new GridBagConstraints();
+		for(int i =0;i<10;i++)
+		{
+			for(int k = 0;k<10;k++)
+			{
+				c.gridx = i;
+				c.gridy = k;
+				controlPanel.add(new JButton(i+" "+k),c);
+			}
+		}
+		
+		return controlPanel;
+		
+	}
+	
 	private JMenuBar generateMenuBar()
 	{
 		JMenuBar menu = new JMenuBar();
