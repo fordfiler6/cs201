@@ -132,12 +132,20 @@ public class GUI extends JFrame
 		
 		GridBagConstraints c = new GridBagConstraints();
 		CalculatorButton[][] buttons = generateButtonArray();
+		JButton toAdd;
 		
 		for(int k = 0;k<buttons[0].length;k++)
 		{
 			for(int i =0;i<buttons.length;i++)
 			{
-				JButtonCustom toAdd = new JButtonCustom();ca
+				if(isNum(buttons[i][k]))
+				{
+					toAdd = new JButtonCustomLight();
+				}
+				else
+				{
+					toAdd = new JButtonCustomDark();
+				}
 				if(buttons[i][k] != null)
 				{
 					if(buttons[i][k] == EQ)
@@ -160,8 +168,7 @@ public class GUI extends JFrame
 					c.gridy = i;
 					
 					c.insets = new Insets(BUTTON_MARGIN,BUTTON_MARGIN,BUTTON_MARGIN,BUTTON_MARGIN);
-					
-					
+	
 					toAdd.setMargin(new Insets(0,0,0,0));
 					toAdd.setText(buttons[i][k].display);
 					controlPanel.add(toAdd,c);
@@ -171,6 +178,25 @@ public class GUI extends JFrame
 		
 		return controlPanel;
 		
+	}
+	
+	private boolean isNum(CalculatorButton test)
+	{
+		if(test == N0
+			|| test == N1
+			|| test == N2
+			|| test == N3
+			|| test == N4
+			|| test == N5
+			|| test == N6
+			|| test == N7
+			|| test == N8
+			|| test == N9)
+		{
+			return true;
+		}
+		return false;
+			
 	}
 	
 	private JMenuBar generateMenuBar()
