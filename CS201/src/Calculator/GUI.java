@@ -40,7 +40,8 @@ public class GUI extends JFrame
 	private static final int BUTTON_HEIGHT = (int) (SCREEN_HEIGHT * (27.0/1080.0));
 	private static final int BUTTON_MARGIN = (int) (SCREEN_WIDTH * (6.0/1920.0))/2;
 	
-	
+	private JLabel equationDisplay;
+	private JLabel textInput;
 	
 	private static final int CONTROL_PANEL_HEIGHT = APP_HEIGHT-(Y_PADDING*3)-TEXT_PANEL_HEIGHT;
 
@@ -102,7 +103,7 @@ public class GUI extends JFrame
 		
 		textDisplay.setLayout(new BorderLayout());
 		
-		JLabel textInput = new JLabel();
+		textInput = new JLabel();
 		textInput.setSize(INNER_PANEL_WIDTH, INPUT_TEXT_HEIGHT);
 		textInput.setHorizontalAlignment(SwingConstants.RIGHT);
 		textInput.setFont(new Font(textInput.getFont().getName(), Font.PLAIN, INPUT_TEXT_HEIGHT));
@@ -110,7 +111,7 @@ public class GUI extends JFrame
 		textDisplay.add(textInput, BorderLayout.PAGE_END);
 		textInput.setText("Inputs");
 	
-		JLabel equationDisplay = new JLabel();
+		equationDisplay = new JLabel();
 		equationDisplay.setSize(INNER_PANEL_WIDTH, EQUATION_HEIGHT);
 		equationDisplay.setHorizontalAlignment(SwingConstants.RIGHT);
 		
@@ -138,16 +139,19 @@ public class GUI extends JFrame
 		{
 			for(int i =0;i<buttons.length;i++)
 			{
-				if(isNum(buttons[i][k]))
-				{
-					toAdd = new JButtonCustomLight();
-				}
-				else
-				{
-					toAdd = new JButtonCustomDark();
-				}
 				if(buttons[i][k] != null)
 				{
+					if(isNum(buttons[i][k]))
+					{
+						toAdd = new JButtonCustomLight();
+						toAdd.addActionListener(new NumberKeyActionListener(buttons[i][k].display,textInput, equationDisplay));
+					}
+					else
+					{
+						toAdd = new JButtonCustomDark();
+						toAdd.addActionListener(new FunctionKeyActionListener(buttons[i][k],textInput, equationDisplay));
+					}
+				
 					if(buttons[i][k] == EQ)
 					{
 						c.gridheight = 2;
@@ -247,6 +251,7 @@ public class GUI extends JFrame
 		menu.setSize(menu.getPreferredSize());
 		return menu;
 	}
+	
 	
 	//Button Defs
 	

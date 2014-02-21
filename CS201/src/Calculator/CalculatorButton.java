@@ -19,4 +19,9 @@ public class CalculatorButton
 	{
 		this.display = display;
 	}
+	
+	public boolean is4Function()
+	{
+		return (this == GUI.PLUS || this == GUI.SUB || this == GUI.FWDS || this == GUI.MULT);
+	}
 }
