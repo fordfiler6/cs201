@@ -46,6 +46,7 @@ public class FunctionKeyActionListener implements ActionListener
 			equationLabel.setText(equationLabel.getText()+inputLabel.getText());
 			inputLabel.setText(evaluateEquation(equationLabel)+"");
 			equationLabel.setText(equationLabel.getText()+" "+button.display+" ");
+			NumberKeyActionListener.clear = true;
 		}
 	}
 	// algorithm from http://stackoverflow.com/questions/1946896/conversion-from-infix-to-prefix
