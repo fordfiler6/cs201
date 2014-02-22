@@ -39,7 +39,10 @@ public class NumberKeyActionListener implements ActionListener
 		{
 			String labelVal = inputLabel.getText();
 			if(labelVal == "0")
+			{
 				inputLabel.setText(buttonText);
+				
+			}
 			else
 				inputLabel.setText(labelVal+buttonText);
 		}

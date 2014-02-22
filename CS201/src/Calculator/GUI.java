@@ -3,6 +3,7 @@ package Calculator;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -13,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -20,6 +22,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
@@ -28,22 +31,26 @@ public class GUI extends JFrame
 {
 	private static final int SCREEN_WIDTH = (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
 	private static final int SCREEN_HEIGHT = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight());
-	private static final int APP_WIDTH = (int) (SCREEN_WIDTH * (422.0/1920.0));
-	private static final int APP_HEIGHT = (int) (SCREEN_HEIGHT * (324.0/1080.0));
+	private static final int APP_WIDTH = (int) (SCREEN_WIDTH * (400.0/1920.0));
+	private static final int APP_HEIGHT = (int) (SCREEN_HEIGHT * (350.0/1080.0));
 	private static final int X_PADDING = (int) (SCREEN_WIDTH * (10.0/1920.0));
 	private static final int Y_PADDING = (int) (SCREEN_HEIGHT * (10.0/1080.0));
 	private static final int INNER_PANEL_WIDTH = APP_WIDTH-(X_PADDING*3);
-	private static final int TEXT_PANEL_HEIGHT = APP_HEIGHT/5;
-	private static final int INPUT_TEXT_HEIGHT = (int)(TEXT_PANEL_HEIGHT*(2.0/3.0));
-	private static final int EQUATION_HEIGHT = TEXT_PANEL_HEIGHT - INPUT_TEXT_HEIGHT;
+	private static final int TEXT_PANEL_HEIGHT = APP_HEIGHT/6;
+	private static final int INPUT_TEXT_HEIGHT = (int)(TEXT_PANEL_HEIGHT*(1.5/3.0));
+	private static final int EQUATION_HEIGHT = (int)(TEXT_PANEL_HEIGHT*(.9/3.0));
 	private static final int BUTTON_WIDTH = (int) (SCREEN_WIDTH * (35.0/1920.0));
 	private static final int BUTTON_HEIGHT = (int) (SCREEN_HEIGHT * (27.0/1080.0));
 	private static final int BUTTON_MARGIN = (int) (SCREEN_WIDTH * (6.0/1920.0))/2;
+	private static final int RADIO_PANEL_WIDTH = (int) (SCREEN_WIDTH * (150.0/1920.0));
+	private static final int RADIO_PANEL_HEIGHT = (int) (SCREEN_HEIGHT * (32.0/1080.0));
+	private static final int CONTROL_PANEL_HEIGHT = APP_HEIGHT-(Y_PADDING*8)-TEXT_PANEL_HEIGHT-RADIO_PANEL_HEIGHT;
+	
 	
 	private JLabel equationDisplay;
 	private JLabel textInput;
 	
-	private static final int CONTROL_PANEL_HEIGHT = APP_HEIGHT-(Y_PADDING*3)-TEXT_PANEL_HEIGHT;
+	
 
 	JLabel debug;
 	GUI()
@@ -76,6 +83,7 @@ public class GUI extends JFrame
 
 		main.add(generateTextDisplay());
 		main.add(generateControlPanel());
+		main.add(generateAngleTypePanel());
 		
 		
 		return main;
@@ -86,7 +94,7 @@ public class GUI extends JFrame
 		CalculatorButton[][] buttons = 
 			{
 				{INV,LN,LP,RP,BKSP,CE,C,SIGN,SQRT},
-				{SINH,SINH,XSQ,FACT,N7,N8,N9,FWDS,PERC },
+				{SINH,SIN,XSQ,FACT,N7,N8,N9,FWDS,PERC },
 				{COSH,COS,EXP,NROOT,N4,N5,N6,MULT,OVERX},
 				{TANH,TAN,CUBE,ROOT3,N1,N2,N3,SUB,EQ},
 				{PI,MOD,LOG,TENX,N0,null,DEC,PLUS,null}
@@ -124,11 +132,41 @@ public class GUI extends JFrame
 		return textDisplay;
 	}
 	
+	private JPanel generateAngleTypePanel()
+	{
+		JRadioButton degrees = new JRadioButton("Degrees");
+		degrees.setActionCommand("degrees");
+		degrees.setMargin(new Insets(0,0,0,0));
+		degrees.setSelected(true);
+		degrees.addActionListener(new RadioButtonListener());
+		
+		JRadioButton radians = new JRadioButton("Radians");
+		radians.setActionCommand("radians");
+		radians.setMargin(new Insets(0,0,0,0));
+		radians.addActionListener(new RadioButtonListener());
+		
+		JPanel angleTypePanel = new JPanel();
+		angleTypePanel.setLayout(new FlowLayout());
+		angleTypePanel.setLocation(X_PADDING, Y_PADDING*2+TEXT_PANEL_HEIGHT);
+		angleTypePanel.setSize(RADIO_PANEL_WIDTH,RADIO_PANEL_HEIGHT);
+		angleTypePanel.setBorder(BorderFactory.createLineBorder(Color.black));
+
+		ButtonGroup buttons = new ButtonGroup();
+		buttons.add(degrees);
+		buttons.add(radians);
+		
+		angleTypePanel.add(degrees);
+		angleTypePanel.add(radians);
+		
+		return angleTypePanel;
+		
+	}
+	
 	private JPanel generateControlPanel()
 	{
 		JPanel controlPanel = new JPanel();
 		controlPanel.setSize(INNER_PANEL_WIDTH,CONTROL_PANEL_HEIGHT);
-		controlPanel.setLocation(X_PADDING, Y_PADDING+TEXT_PANEL_HEIGHT);
+		controlPanel.setLocation(X_PADDING, (Y_PADDING*2)+TEXT_PANEL_HEIGHT+RADIO_PANEL_HEIGHT);
 		controlPanel.setLayout(new GridBagLayout());
 		
 		GridBagConstraints c = new GridBagConstraints();
