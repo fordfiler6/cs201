@@ -80,7 +80,7 @@ public class FunctionKeyActionListener implements ActionListener
 					
 					
 					System.out.println("pushing operand "+operator+leftOperand+rightOperand);
-					operands.push(operator+leftOperand+rightOperand);
+					operands.push(operator+" "+leftOperand+rightOperand);
 				}
 				System.out.println("pushing operator "+token);
 				operators.push(token);
@@ -92,7 +92,7 @@ public class FunctionKeyActionListener implements ActionListener
 			String rightOperand = safePop(operands);
 			String leftOperand = safePop(operands);
 			
-			operands.push(operator+leftOperand+rightOperand);
+			operands.push(operator+" "+leftOperand+rightOperand);
 		}
 		return operands.pop();
 	}
