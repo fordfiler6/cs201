@@ -3,6 +3,7 @@ package Calculator;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.EmptyStackException;
+import java.util.List;
 import java.util.Stack;
 import java.util.StringTokenizer;
 
@@ -63,12 +64,10 @@ public class FunctionKeyActionListener implements ActionListener
 			String token = tok.nextToken();
 			if(isNumeric(token))
 			{
-				System.out.println("pushing operand "+token);
 				operands.push(token+" ");
 			}
 			else if(operators.isEmpty() || precedence(operators.peek(),token))
 			{
-				System.out.println("pushing operator "+token);
 				operators.push(token);
 			}
 			else if(!precedence(operators.peek(),token))
@@ -80,10 +79,8 @@ public class FunctionKeyActionListener implements ActionListener
 					String leftOperand = safePop(operands);
 					
 					
-					System.out.println("pushing operand "+operator+leftOperand+rightOperand);
 					operands.push(operator+" "+leftOperand+rightOperand);
 				}
-				System.out.println("pushing operator "+token);
 				operators.push(token);
 			}
 		}
@@ -129,8 +126,54 @@ public class FunctionKeyActionListener implements ActionListener
 	
 	private double evaluateEquation(JLabel equationLabel)
 	{
-		System.out.println(convertToPrefix(equationLabel.getText()));
+		Stack<String> progress = new Stack<String>();
+		String infix = convertToPrefix(equationLabel.getText());
+		System.out.println(infix);
+		StringTokenizer tok = new StringTokenizer(infix," ");
 
+		
+		while(tok.hasMoreElements())
+		{	
+			String token = tok.nextToken();
+			if(isNumeric(token))
+			{
+				progress.push(token);
+			}
+			else
+			{
+				progress.push(token);
+			}
+			while(progress.size()>=3 && readyToOperate(progress.subList(progress.size()-3, progress.size())))
+			{
+				String arg2 = progress.pop();
+				String arg1 = progress.pop();
+				String operator = progress.pop();
+				String operationResult = doOperation(operator, arg1, arg2)+"";
+				System.out.println(arg2+operator+arg1);
+				progress.push(operationResult);
+			}
+		}
+		return Double.parseDouble(progress.pop());
+	}
+	private boolean readyToOperate(List<String> subject)
+	{
+		if(!isNumeric(subject.get(0)) && isNumeric(subject.get(1)) && isNumeric(subject.get(2)))
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	private double doOperation(String operator, String arg1, String arg2)
+	{
+		char op = operator.charAt(0);
+		switch(op)
+		{
+			case '+': return Double.parseDouble(arg1) + Double.parseDouble(arg2);
+			case '-': return Double.parseDouble(arg1) - Double.parseDouble(arg2);
+			case '/': return Double.parseDouble(arg1) / Double.parseDouble(arg2);
+			case '*': return Double.parseDouble(arg1) * Double.parseDouble(arg2);
+		}
 		return 0;
 	}
 	
