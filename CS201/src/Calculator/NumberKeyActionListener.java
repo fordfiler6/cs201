@@ -30,21 +30,25 @@ public class NumberKeyActionListener implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent arg0) 
 	{
-		if(clear)
-		{
-			inputLabel.setText(buttonText);
-			clear = false;
-		}
+		if(FunctionKeyActionListener.error){}
 		else
 		{
-			String labelVal = inputLabel.getText();
-			if(labelVal == "0")
+			if(clear)
 			{
 				inputLabel.setText(buttonText);
-				
+				clear = false;
 			}
 			else
-				inputLabel.setText(labelVal+buttonText);
+			{
+				String labelVal = inputLabel.getText();
+				if(labelVal == "0")
+				{
+					inputLabel.setText(buttonText);
+					
+				}
+				else
+					inputLabel.setText(labelVal+buttonText);
+			}
 		}
 	}
 

@@ -17,6 +17,7 @@ public class FunctionKeyActionListener implements ActionListener
 	JLabel equationLabel;
 	JLabel inputLabel;
 	private static String simpleEquation;
+	public static boolean error = false;
 	
 	FunctionKeyActionListener()
 	{
@@ -42,7 +43,12 @@ public class FunctionKeyActionListener implements ActionListener
 		{
 			inputLabel.setText("0");
 			equationLabel.setText("");
+			error = false;
 			simpleEquation = "";
+		}
+		else if(error)
+		{
+			
 		}
 		else if(button == GUI.CE)
 		{
@@ -132,7 +138,84 @@ public class FunctionKeyActionListener implements ActionListener
 			
 			NumberKeyActionListener.clear = true;
 		}
-		else if (button.is4Function())
+		else if(button == GUI.SINH)
+		{
+			if(RadioButtonListener.radians)
+			{
+				equationLabel.setText(equationLabel.getText()+"sinhr("+inputLabel.getText()+")");
+				simpleEquation = simpleEquation + Math.sinh(Double.parseDouble(inputLabel.getText()));
+			}
+			else
+			{
+				equationLabel.setText(equationLabel.getText()+"sinhd("+inputLabel.getText()+")");
+				simpleEquation = simpleEquation + Math.sinh(Math.toRadians(Double.parseDouble(inputLabel.getText())));
+			}
+			
+			NumberKeyActionListener.clear = true;
+		}
+		else if(button == GUI.COSH)
+		{
+			if(RadioButtonListener.radians)
+			{
+				equationLabel.setText(equationLabel.getText()+"coshr("+inputLabel.getText()+")");
+				simpleEquation = simpleEquation + Math.cosh(Double.parseDouble(inputLabel.getText()));
+			}
+			else
+			{
+				equationLabel.setText(equationLabel.getText()+"coshd("+inputLabel.getText()+")");
+				simpleEquation = simpleEquation + Math.cosh(Math.toRadians(Double.parseDouble(inputLabel.getText())));
+			}
+			
+			NumberKeyActionListener.clear = true;
+		}
+		else if(button == GUI.TANH)
+		{
+			if(RadioButtonListener.radians)
+			{
+				equationLabel.setText(equationLabel.getText()+"tanhr("+inputLabel.getText()+")");
+				simpleEquation = simpleEquation + Math.tanh(Double.parseDouble(inputLabel.getText()));
+			}
+			else
+			{
+				equationLabel.setText(equationLabel.getText()+"tanhd("+inputLabel.getText()+")");
+				simpleEquation = simpleEquation + Math.tanh(Math.toRadians(Double.parseDouble(inputLabel.getText())));
+			}
+			
+			NumberKeyActionListener.clear = true;
+		}
+		else if(button == GUI.XSQ)
+		{
+
+			equationLabel.setText(equationLabel.getText()+"sqr("+inputLabel.getText()+")");
+			simpleEquation = simpleEquation + Math.pow(Double.parseDouble(inputLabel.getText()),2);
+			
+			NumberKeyActionListener.clear = true;
+		}
+		else if(button == GUI.MOD)
+		{
+
+			equationLabel.setText(equationLabel.getText()+inputLabel.getText()+" Mod ");
+			simpleEquation = simpleEquation + inputLabel.getText() +" % ";
+			
+			NumberKeyActionListener.clear = true;
+		}
+		else if(button == GUI.FACT)
+		{
+
+			equationLabel.setText(equationLabel.getText()+"fact("+inputLabel.getText()+")");
+			simpleEquation = simpleEquation + factorial(Double.parseDouble(inputLabel.getText()));
+			
+			NumberKeyActionListener.clear = true;
+		}
+		else if(button == GUI.SQRT)
+		{
+
+			equationLabel.setText(equationLabel.getText()+"sqrt("+inputLabel.getText()+")");
+			simpleEquation = simpleEquation + Math.sqrt(Double.parseDouble(inputLabel.getText()));
+			
+			NumberKeyActionListener.clear = true;
+		}
+		else if (button.is4Function() || button == GUI.MOD)
 		{
 			if(!NumberKeyActionListener.clear)
 			{
@@ -147,6 +230,32 @@ public class FunctionKeyActionListener implements ActionListener
 			NumberKeyActionListener.clear = true;
 		}
 	}
+	
+	private int factorial(double n) 
+	{
+		int intN = (int)n;
+		if(n != intN)
+		{
+			inputLabel.setText("Error: n! of n not type int");
+			error = true;
+		}
+		else if(n < 0)
+		{
+			inputLabel.setText("Error: n less than zero");
+			error = true;
+		}
+		else
+		{
+	        int sol = 1; 
+	        for (int i = 1; i <= n; i++) 
+	        {
+	            sol *= i;
+	        }
+	        return sol;
+		}
+		return -1;
+    }
+	
 	// algorithm from http://stackoverflow.com/questions/1946896/conversion-from-infix-to-prefix
 	private String convertToPrefix(String infix)
 	{
@@ -278,6 +387,7 @@ public class FunctionKeyActionListener implements ActionListener
 			case '-': return Double.parseDouble(arg1) - Double.parseDouble(arg2);
 			case '/': return Double.parseDouble(arg1) / Double.parseDouble(arg2);
 			case '*': return Double.parseDouble(arg1) * Double.parseDouble(arg2);
+			case '%': return Double.parseDouble(arg1) % Double.parseDouble(arg2);
 		}
 		return 0;
 	}
