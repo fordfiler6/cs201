@@ -33,11 +33,17 @@ public class NumberKeyActionListener implements ActionListener
 		if(FunctionKeyActionListener.error){}
 		else
 		{
+			if(FunctionKeyActionListener.lastPressed == GUI.NROOT)
+			{
+				double root = (1.0/Double.parseDouble(buttonText));
+				FunctionKeyActionListener.simpleEquation = FunctionKeyActionListener.simpleEquation + root;
+			}
 			if(clear)
 			{
 				inputLabel.setText(buttonText);
 				clear = false;
 			}
+
 			else
 			{
 				String labelVal = inputLabel.getText();
@@ -49,6 +55,7 @@ public class NumberKeyActionListener implements ActionListener
 				else
 					inputLabel.setText(labelVal+buttonText);
 			}
+			
 		}
 	}
 

@@ -17,8 +17,10 @@ public class FunctionKeyActionListener implements ActionListener
 	CalculatorButton button;
 	JLabel equationLabel;
 	JLabel inputLabel;
-	private static String simpleEquation;
+	public static String simpleEquation;
 	public static boolean error = false;
+	public static CalculatorButton lastPressed = null;
+	private static GUI gui;
 	
 	FunctionKeyActionListener()
 	{
@@ -28,12 +30,12 @@ public class FunctionKeyActionListener implements ActionListener
 	
 	}
 	
-	FunctionKeyActionListener(CalculatorButton button, JLabel input, JLabel equation)
+	FunctionKeyActionListener(CalculatorButton button, JLabel input, JLabel equation, GUI gui)
 	{
 		this.button = button;
 		equationLabel = equation;
 		inputLabel = input;
-		
+		this.gui = gui;
 	}
 
 	@Override
@@ -199,6 +201,22 @@ public class FunctionKeyActionListener implements ActionListener
 			
 			NumberKeyActionListener.clear = true;
 		}
+		else if(button == GUI.EXP)
+		{
+
+			equationLabel.setText(equationLabel.getText()+inputLabel.getText()+" ^ ");
+			simpleEquation = simpleEquation + inputLabel.getText() +" ^ ";
+			
+			NumberKeyActionListener.clear = true;
+		}
+		else if(button == GUI.NROOT)
+		{
+
+			equationLabel.setText(equationLabel.getText()+inputLabel.getText()+" yroot ");
+			simpleEquation = simpleEquation + inputLabel.getText() +" ^ ";
+			
+			NumberKeyActionListener.clear = true;
+		}
 		else if(button == GUI.FACT)
 		{
 
@@ -215,6 +233,50 @@ public class FunctionKeyActionListener implements ActionListener
 			
 			NumberKeyActionListener.clear = true;
 		}
+		else if(button == GUI.CUBE)
+		{
+
+			equationLabel.setText(equationLabel.getText()+"cube("+inputLabel.getText()+")");
+			simpleEquation = simpleEquation + Math.pow(Double.parseDouble(inputLabel.getText()),3);
+			
+			NumberKeyActionListener.clear = true;
+		}
+		else if(button == GUI.ROOT3)
+		{
+
+			equationLabel.setText(equationLabel.getText()+"cuberoot("+inputLabel.getText()+")");
+			simpleEquation = simpleEquation + Math.pow(Double.parseDouble(inputLabel.getText()),(1.0/3.0));
+			
+			NumberKeyActionListener.clear = true;
+		}
+		else if(button == GUI.TENX)
+		{
+
+			equationLabel.setText(equationLabel.getText()+"powten("+inputLabel.getText()+")");
+			simpleEquation = simpleEquation + Math.pow(10,Double.parseDouble(inputLabel.getText()));
+			
+			NumberKeyActionListener.clear = true;
+		}
+		else if(button == GUI.LOG)
+		{
+
+			equationLabel.setText(equationLabel.getText()+"log("+inputLabel.getText()+")");
+			simpleEquation = simpleEquation + Math.log10(Double.parseDouble(inputLabel.getText()));
+			
+			NumberKeyActionListener.clear = true;
+		}
+		else if(button == GUI.LN)
+		{
+
+			equationLabel.setText(equationLabel.getText()+"ln("+inputLabel.getText()+")");
+			simpleEquation = simpleEquation + Math.log(Double.parseDouble(inputLabel.getText()));
+			
+			NumberKeyActionListener.clear = true;
+		}
+		else if(button == GUI.INV)
+		{
+			gui.toInverse();
+		}
 		else if (button.is4Function() || button == GUI.MOD)
 		{
 			if(!NumberKeyActionListener.clear)
@@ -229,7 +291,9 @@ public class FunctionKeyActionListener implements ActionListener
 			System.out.println("simple = "+simpleEquation);
 			NumberKeyActionListener.clear = true;
 		}
+		lastPressed = button;
 	}
+
 	
 	private int factorial(double n) 
 	{
@@ -255,6 +319,7 @@ public class FunctionKeyActionListener implements ActionListener
 		}
 		return -1;
     }
+	
 	
 	// algorithm from http://stackoverflow.com/questions/1946896/conversion-from-infix-to-prefix
 	private String convertToPrefix(String infix)
@@ -327,6 +392,10 @@ public class FunctionKeyActionListener implements ActionListener
 				return true;
 			}
 		}
+		if(potHigher.equals("^"))
+		{
+			return true;
+		}
 		return false;
 	}
 	
@@ -388,6 +457,7 @@ public class FunctionKeyActionListener implements ActionListener
 			case '/': return Double.parseDouble(arg1) / Double.parseDouble(arg2);
 			case '*': return Double.parseDouble(arg1) * Double.parseDouble(arg2);
 			case '%': return Double.parseDouble(arg1) % Double.parseDouble(arg2);
+			case '^': return Math.pow(Double.parseDouble(arg1), Double.parseDouble(arg2));
 		}
 		return 0;
 	}

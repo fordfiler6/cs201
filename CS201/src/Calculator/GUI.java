@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -43,16 +44,16 @@ public class GUI extends JFrame implements KeyListener
 {
 	private static final int SCREEN_WIDTH = (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
 	private static final int SCREEN_HEIGHT = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight());
-	private static final int APP_WIDTH = (int) (SCREEN_WIDTH * (400.0/1920.0));
-	private static final int APP_HEIGHT = (int) (SCREEN_HEIGHT * (350.0/1080.0));
+	private static final int APP_WIDTH = (int) (SCREEN_WIDTH * (500.0/1920.0));
+	private static final int APP_HEIGHT = (int) (SCREEN_HEIGHT * (400.0/1080.0));
 	private static final int X_PADDING = (int) (SCREEN_WIDTH * (10.0/1920.0));
 	private static final int Y_PADDING = (int) (SCREEN_HEIGHT * (10.0/1080.0));
 	private static final int INNER_PANEL_WIDTH = APP_WIDTH-(X_PADDING*3);
 	private static final int TEXT_PANEL_HEIGHT = APP_HEIGHT/6;
 	private static final int INPUT_TEXT_HEIGHT = (int)(TEXT_PANEL_HEIGHT*(1.5/3.0));
 	private static final int EQUATION_HEIGHT = (int)(TEXT_PANEL_HEIGHT*(.9/3.0));
-	private static final int BUTTON_WIDTH = (int) (SCREEN_WIDTH * (35.0/1920.0));
-	private static final int BUTTON_HEIGHT = (int) (SCREEN_HEIGHT * (27.0/1080.0));
+	private static final int BUTTON_WIDTH = (int) (SCREEN_WIDTH * (45.0/1920.0));
+	private static final int BUTTON_HEIGHT = (int) (SCREEN_HEIGHT * (35.0/1080.0));
 	private static final int BUTTON_MARGIN = (int) (SCREEN_WIDTH * (6.0/1920.0))/2;
 	private static final int RADIO_PANEL_WIDTH = (int) (SCREEN_WIDTH * (150.0/1920.0));
 	private static final int RADIO_PANEL_HEIGHT = (int) (SCREEN_HEIGHT * (32.0/1080.0));
@@ -61,10 +62,13 @@ public class GUI extends JFrame implements KeyListener
 	
 	private static JFrame aboutWindow;
 	
+	private JPanel nonInv;
+	private JPanel inv;
+	
 	private JLabel equationDisplay;
 	private JLabel textInput;
 	
-	ArrayList<JButton> keyLinkedButtons = new ArrayList<JButton>();
+	public ArrayList<JButton> keyLinkedButtons = new ArrayList<JButton>();
 
 	JLabel debug;
 	private String copiedText ="";
@@ -113,7 +117,12 @@ public class GUI extends JFrame implements KeyListener
 		
 
 		main.add(generateTextDisplay());
-		main.add(generateControlPanel());
+		nonInv = generateControlPanel(false);
+		inv = generateControlPanel(true);
+		inv.setVisible(false);
+		main.add(nonInv);
+		main.add(inv);
+		
 		main.add(generateAngleTypePanel());
 		
 		
@@ -129,6 +138,18 @@ public class GUI extends JFrame implements KeyListener
 				{COSH,COS,EXP,NROOT,N4,N5,N6,MULT,OVERX},
 				{TANH,TAN,CUBE,ROOT3,N1,N2,N3,SUB,EQ},
 				{PI,MOD,LOG,TENX,N0,null,DEC,PLUS,null}
+			};
+		return buttons;
+	}
+	private CalculatorButton[][] generateInvButtonArray()
+	{
+		CalculatorButton[][] buttons = 
+			{
+				{INV,EX,LP,RP,BKSP,CE,C,SIGN,SQRT},
+				{INVSH,INVS,XSQ,FACT,N7,N8,N9,FWDS,PERC },
+				{INVCH,INVC,EXP,NROOT,N4,N5,N6,MULT,OVERX},
+				{INVTH,INVT,CUBE,ROOT3,N1,N2,N3,SUB,EQ},
+				{TWOPI,MOD,LOG,TENX,N0,null,DEC,PLUS,null}
 			};
 		return buttons;
 	}
@@ -200,7 +221,7 @@ public class GUI extends JFrame implements KeyListener
 		
 	}
 	
-	private JPanel generateControlPanel()
+	private JPanel generateControlPanel(boolean inv)
 	{
 		JPanel controlPanel = new JPanel();
 		controlPanel.setSize(INNER_PANEL_WIDTH,CONTROL_PANEL_HEIGHT);
@@ -208,7 +229,16 @@ public class GUI extends JFrame implements KeyListener
 		controlPanel.setLayout(new GridBagLayout());
 		
 		GridBagConstraints c = new GridBagConstraints();
-		CalculatorButton[][] buttons = generateButtonArray();
+		
+		CalculatorButton[][] buttons = null;
+		if(inv)
+		{
+			buttons = generateInvButtonArray();
+		}
+		else
+		{
+			buttons = generateButtonArray();
+		}
 		JButton toAdd;
 		
 		for(int k = 0;k<buttons[0].length;k++)
@@ -222,10 +252,14 @@ public class GUI extends JFrame implements KeyListener
 						toAdd = new JButtonCustomLight();
 						toAdd.addActionListener(new NumberKeyActionListener(buttons[i][k].display,textInput, equationDisplay));
 					}
+					else if(buttons[i][k] == PERC)
+					{
+						toAdd = new GrayedButton();
+					}
 					else
 					{
 						toAdd = new JButtonCustomDark();
-						toAdd.addActionListener(new FunctionKeyActionListener(buttons[i][k],textInput, equationDisplay));
+						toAdd.addActionListener(new FunctionKeyActionListener(buttons[i][k],textInput, equationDisplay, this));
 					}
 				
 					if(buttons[i][k] == EQ)
@@ -238,10 +272,7 @@ public class GUI extends JFrame implements KeyListener
 						c.gridwidth = 2;
 						toAdd.setPreferredSize(new Dimension(BUTTON_WIDTH*2+BUTTON_MARGIN*2,BUTTON_HEIGHT));
 					}
-					else if(buttons[i][k] == PERC)
-					{
-						toAdd
-					}
+
 					else
 					{
 						c.gridheight = 1;
@@ -254,7 +285,14 @@ public class GUI extends JFrame implements KeyListener
 					c.insets = new Insets(BUTTON_MARGIN,BUTTON_MARGIN,BUTTON_MARGIN,BUTTON_MARGIN);
 	
 					toAdd.setMargin(new Insets(0,0,0,0));
-					toAdd.setText(buttons[i][k].display);
+					if(buttons[i][k] != NROOT)
+					{
+						toAdd.setText(buttons[i][k].display);
+					}
+					else
+					{
+						toAdd.setIcon(new ImageIcon("yroot.png"));
+					}
 					if(toAdd.getText().length() >0)
 						keyLinkedButtons.add(toAdd);
 					toAdd.addKeyListener(this);
@@ -267,6 +305,20 @@ public class GUI extends JFrame implements KeyListener
 		
 	}
 	
+	public void toInverse()
+	{
+		if(nonInv.isVisible())
+		{
+			nonInv.setVisible(false);
+			inv.setVisible(true);
+		}
+		else
+		{
+			nonInv.setVisible(true);
+			inv.setVisible(false);
+		}
+	}
+
 	private boolean isNum(CalculatorButton test)
 	{
 		if(test == N0
@@ -384,7 +436,7 @@ public class GUI extends JFrame implements KeyListener
 	public static CalculatorButton PERC = new CalculatorButton("%");
 	public static CalculatorButton COSH = new CalculatorButton("cosh");
 	public static CalculatorButton COS = new CalculatorButton("cos");
-	public static CalculatorButton EXP = new CalculatorButton("");
+	public static CalculatorButton EXP = new CalculatorButton("<html>x<sup>y</sup></html>");
 	public static CalculatorButton NROOT = new CalculatorButton("");
 	public static CalculatorButton N4 = new CalculatorButton("4");
 	public static CalculatorButton N5 = new CalculatorButton("5");
@@ -394,19 +446,29 @@ public class GUI extends JFrame implements KeyListener
 	public static CalculatorButton TANH = new CalculatorButton("tanh");
 	public static CalculatorButton TAN = new CalculatorButton("tan");
 	public static CalculatorButton CUBE = new CalculatorButton("x\u00B3");
-	public static CalculatorButton ROOT3 = new CalculatorButton("");
+	public static CalculatorButton ROOT3 = new CalculatorButton("\u221B"+"x");
 	public static CalculatorButton N1 = new CalculatorButton("1");
 	public static CalculatorButton N2 = new CalculatorButton("2");
 	public static CalculatorButton N3 = new CalculatorButton("3");
 	public static CalculatorButton SUB = new CalculatorButton("-");
 	public static CalculatorButton EQ = new CalculatorButton("=");
 	public static CalculatorButton PI = new CalculatorButton("\u03C0");
+	public static CalculatorButton TWOPI = new CalculatorButton("2*\u03C0");
 	public static CalculatorButton MOD = new CalculatorButton("Mod");
 	public static CalculatorButton LOG = new CalculatorButton("log");
-	public static CalculatorButton TENX = new CalculatorButton("");
+	public static CalculatorButton TENX = new CalculatorButton("<html>10<sup>x</sup></html>");
 	public static CalculatorButton N0 = new CalculatorButton("0");
 	public static CalculatorButton DEC = new CalculatorButton(".");
 	public static CalculatorButton PLUS = new CalculatorButton("+");
+	
+	public static CalculatorButton INVS = new CalculatorButton("<html>sin\u207B<sup>1</sup></html>");
+	public static CalculatorButton INVSH = new CalculatorButton("<html>sinh\u207B<sup>1</sup></html>");
+	public static CalculatorButton INVC = new CalculatorButton("<html>cos\u207B<sup>1</sup></html>");
+	public static CalculatorButton INVCH = new CalculatorButton("<html>cos\u207B<sup>1</sup></html>");
+	public static CalculatorButton INVT = new CalculatorButton("<html>tan\u207B<sup>1</sup></html>");
+	public static CalculatorButton INVTH = new CalculatorButton("<html>tanh\u207B<sup>1</sup></html>");
+	public static CalculatorButton EX = new CalculatorButton("<html>e<sup>x</sup></html>");
+	
 	
 	@Override
 	public void keyPressed(KeyEvent arg0) {
