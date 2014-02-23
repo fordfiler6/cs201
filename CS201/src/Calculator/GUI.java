@@ -44,7 +44,7 @@ public class GUI extends JFrame implements KeyListener
 {
 	private static final int SCREEN_WIDTH = (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
 	private static final int SCREEN_HEIGHT = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight());
-	private static final int APP_WIDTH = (int) (SCREEN_WIDTH * (500.0/1920.0));
+	private static final int APP_WIDTH = (int) (SCREEN_WIDTH * (489.0/1920.0));
 	private static final int APP_HEIGHT = (int) (SCREEN_HEIGHT * (400.0/1080.0));
 	private static final int X_PADDING = (int) (SCREEN_WIDTH * (10.0/1920.0));
 	private static final int Y_PADDING = (int) (SCREEN_HEIGHT * (10.0/1080.0));
@@ -54,13 +54,18 @@ public class GUI extends JFrame implements KeyListener
 	private static final int EQUATION_HEIGHT = (int)(TEXT_PANEL_HEIGHT*(.9/3.0));
 	private static final int BUTTON_WIDTH = (int) (SCREEN_WIDTH * (45.0/1920.0));
 	private static final int BUTTON_HEIGHT = (int) (SCREEN_HEIGHT * (35.0/1080.0));
-	private static final int BUTTON_MARGIN = (int) (SCREEN_WIDTH * (6.0/1920.0))/2;
+	private static final int BUTTON_MARGIN = (int) (SCREEN_WIDTH * (7.0/1920.0))/2;
 	private static final int RADIO_PANEL_WIDTH = (int) (SCREEN_WIDTH * (150.0/1920.0));
 	private static final int RADIO_PANEL_HEIGHT = (int) (SCREEN_HEIGHT * (32.0/1080.0));
 	private static final int CONTROL_PANEL_HEIGHT = APP_HEIGHT-(Y_PADDING*8)-TEXT_PANEL_HEIGHT-RADIO_PANEL_HEIGHT;
 	
 	
 	private static JFrame aboutWindow;
+	
+	
+	private float[] bgcolor = Color.RGBtoHSB(221, 232, 243, null);
+	private float[] bg2color = Color.RGBtoHSB(239, 244, 252, null);
+	private float[] bordercolor = Color.RGBtoHSB(142, 156, 173, null);
 	
 	private JPanel nonInv;
 	private JPanel inv;
@@ -80,13 +85,14 @@ public class GUI extends JFrame implements KeyListener
 		JMenuBar menu = generateMenuBar();
 		this.setJMenuBar(menu);
 		this.setVisible(true);
-		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		this.setTitle("Calculator");
+		
 		JPanel parentContainer = generateMainPanel();
-		debug = new JLabel("debug");
-	
-		parentContainer.add(debug);
+		
+
+		parentContainer.setBackground(Color.getHSBColor(bgcolor[0], bgcolor[1],bgcolor[2]));
 		
 		this.add(parentContainer);
 		this.addKeyListener(this);
@@ -106,10 +112,7 @@ public class GUI extends JFrame implements KeyListener
 		}
 		
 	}
-	private void setDebugText(String debugMessage)
-	{
-		debug.setText(debugMessage);
-	}
+
 	private JPanel generateMainPanel()
 	{
 		JPanel main = new JPanel();
@@ -120,8 +123,12 @@ public class GUI extends JFrame implements KeyListener
 		nonInv = generateControlPanel(false);
 		inv = generateControlPanel(true);
 		inv.setVisible(false);
+		inv.setBackground(Color.getHSBColor(bgcolor[0], bgcolor[1],bgcolor[2]));
+		nonInv.setBackground(Color.getHSBColor(bgcolor[0], bgcolor[1],bgcolor[2]));
 		main.add(nonInv);
 		main.add(inv);
+		
+		
 		
 		main.add(generateAngleTypePanel());
 		
@@ -160,13 +167,13 @@ public class GUI extends JFrame implements KeyListener
 		textDisplay.addKeyListener(this);
 		textDisplay.setSize(INNER_PANEL_WIDTH, TEXT_PANEL_HEIGHT);
 		textDisplay.setLocation(X_PADDING, Y_PADDING);
-		textDisplay.setBorder(BorderFactory.createLineBorder(Color.black));
+		textDisplay.setBorder(BorderFactory.createLineBorder(Color.getHSBColor(bordercolor[0], bordercolor[1], bordercolor[1])));
 		
 		textDisplay.setLayout(new BorderLayout());
 		
 		textInput = new JLabel();
 		textInput.addKeyListener(this);
-		textInput.setSize(INNER_PANEL_WIDTH, INPUT_TEXT_HEIGHT);
+		textInput.setSize(INNER_PANEL_WIDTH-X_PADDING, INPUT_TEXT_HEIGHT);
 		textInput.setHorizontalAlignment(SwingConstants.RIGHT);
 		textInput.setFont(new Font(textInput.getFont().getName(), Font.PLAIN, INPUT_TEXT_HEIGHT));
 		
@@ -175,13 +182,19 @@ public class GUI extends JFrame implements KeyListener
 	
 		equationDisplay = new JLabel();
 		equationDisplay.addKeyListener(this);
-		equationDisplay.setSize(INNER_PANEL_WIDTH, EQUATION_HEIGHT);
+		equationDisplay.setSize(INNER_PANEL_WIDTH-X_PADDING, EQUATION_HEIGHT);
 		equationDisplay.setHorizontalAlignment(SwingConstants.RIGHT);
 		
 		equationDisplay.setFont(new Font(equationDisplay.getFont().getName(), Font.PLAIN, EQUATION_HEIGHT));
 
 		equationDisplay.setText("");
 		textDisplay.add(equationDisplay, BorderLayout.PAGE_START);
+		
+		equationDisplay.setBackground(Color.getHSBColor(bg2color[0], bg2color[1],bg2color[2]));
+		textInput.setBackground(Color.getHSBColor(bg2color[0], bg2color[1],bg2color[2]));
+		
+		textDisplay.setBackground(Color.getHSBColor(bg2color[0], bg2color[1],bg2color[2]));
+		
 		
 		return textDisplay;
 	}
@@ -208,7 +221,7 @@ public class GUI extends JFrame implements KeyListener
 		angleTypePanel.setLayout(new FlowLayout());
 		angleTypePanel.setLocation(X_PADDING, Y_PADDING*2+TEXT_PANEL_HEIGHT);
 		angleTypePanel.setSize(RADIO_PANEL_WIDTH,RADIO_PANEL_HEIGHT);
-		angleTypePanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		angleTypePanel.setBorder(BorderFactory.createLineBorder(Color.getHSBColor(bordercolor[0], bordercolor[1], bordercolor[1])));
 
 		ButtonGroup buttons = new ButtonGroup();
 		buttons.add(degrees);
@@ -216,6 +229,11 @@ public class GUI extends JFrame implements KeyListener
 		
 		angleTypePanel.add(degrees);
 		angleTypePanel.add(radians);
+		
+		
+		degrees.setBackground(Color.getHSBColor(bgcolor[0], bgcolor[1],bgcolor[2]));
+		radians.setBackground(Color.getHSBColor(bgcolor[0], bgcolor[1],bgcolor[2]));
+		angleTypePanel.setBackground(Color.getHSBColor(bgcolor[0], bgcolor[1],bgcolor[2]));
 		
 		return angleTypePanel;
 		
