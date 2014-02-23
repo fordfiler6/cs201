@@ -87,6 +87,20 @@ public class GUI extends JFrame implements KeyListener
 		this.add(parentContainer);
 		this.addKeyListener(this);
 		
+		for(int i=0;i<keyLinkedButtons.size();i++)
+		{
+			if(keyLinkedButtons.get(i).getText().charAt(0) == 'C')
+			{
+				//System.out.println("Button clicked = " +)
+				keyLinkedButtons.get(i).doClick();
+			}
+			if(keyLinkedButtons.get(i).getText().charAt(0) == '%')
+			{
+
+				keyLinkedButtons.get(i).setEnabled(false);
+			}
+		}
+		
 	}
 	private void setDebugText(String debugMessage)
 	{
@@ -136,7 +150,7 @@ public class GUI extends JFrame implements KeyListener
 		textInput.setFont(new Font(textInput.getFont().getName(), Font.PLAIN, INPUT_TEXT_HEIGHT));
 		
 		textDisplay.add(textInput, BorderLayout.PAGE_END);
-		textInput.setText("Inputs");
+		textInput.setText("0");
 	
 		equationDisplay = new JLabel();
 		equationDisplay.addKeyListener(this);
@@ -145,7 +159,7 @@ public class GUI extends JFrame implements KeyListener
 		
 		equationDisplay.setFont(new Font(equationDisplay.getFont().getName(), Font.PLAIN, EQUATION_HEIGHT));
 
-		equationDisplay.setText("Equation");
+		equationDisplay.setText("");
 		textDisplay.add(equationDisplay, BorderLayout.PAGE_START);
 		
 		return textDisplay;
@@ -223,6 +237,10 @@ public class GUI extends JFrame implements KeyListener
 					{
 						c.gridwidth = 2;
 						toAdd.setPreferredSize(new Dimension(BUTTON_WIDTH*2+BUTTON_MARGIN*2,BUTTON_HEIGHT));
+					}
+					else if(buttons[i][k] == PERC)
+					{
+						toAdd
 					}
 					else
 					{
@@ -409,6 +427,7 @@ public class GUI extends JFrame implements KeyListener
 		{
 			if(keyLinkedButtons.get(i).getText().charAt(0) == typed)
 			{
+				//System.out.println("Button clicked = " +)
 				keyLinkedButtons.get(i).doClick();
 			}
 		}
