@@ -5,14 +5,25 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -23,11 +34,12 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JWindow;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
-public class GUI extends JFrame 
+public class GUI extends JFrame implements KeyListener
 {
 	private static final int SCREEN_WIDTH = (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
 	private static final int SCREEN_HEIGHT = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight());
@@ -47,12 +59,15 @@ public class GUI extends JFrame
 	private static final int CONTROL_PANEL_HEIGHT = APP_HEIGHT-(Y_PADDING*8)-TEXT_PANEL_HEIGHT-RADIO_PANEL_HEIGHT;
 	
 	
+	private static JFrame aboutWindow;
+	
 	private JLabel equationDisplay;
 	private JLabel textInput;
 	
-	
+	ArrayList<JButton> keyLinkedButtons = new ArrayList<JButton>();
 
 	JLabel debug;
+	private String copiedText ="";
 	GUI()
 	{
 		Toolkit.getDefaultToolkit().getScreenSize().getHeight();
@@ -62,6 +77,7 @@ public class GUI extends JFrame
 		this.setJMenuBar(menu);
 		this.setVisible(true);
 		
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel parentContainer = generateMainPanel();
 		debug = new JLabel("debug");
@@ -69,6 +85,7 @@ public class GUI extends JFrame
 		parentContainer.add(debug);
 		
 		this.add(parentContainer);
+		this.addKeyListener(this);
 		
 	}
 	private void setDebugText(String debugMessage)
@@ -105,6 +122,7 @@ public class GUI extends JFrame
 	private JPanel generateTextDisplay()
 	{
 		JPanel textDisplay = new JPanel();
+		textDisplay.addKeyListener(this);
 		textDisplay.setSize(INNER_PANEL_WIDTH, TEXT_PANEL_HEIGHT);
 		textDisplay.setLocation(X_PADDING, Y_PADDING);
 		textDisplay.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -112,6 +130,7 @@ public class GUI extends JFrame
 		textDisplay.setLayout(new BorderLayout());
 		
 		textInput = new JLabel();
+		textInput.addKeyListener(this);
 		textInput.setSize(INNER_PANEL_WIDTH, INPUT_TEXT_HEIGHT);
 		textInput.setHorizontalAlignment(SwingConstants.RIGHT);
 		textInput.setFont(new Font(textInput.getFont().getName(), Font.PLAIN, INPUT_TEXT_HEIGHT));
@@ -120,6 +139,7 @@ public class GUI extends JFrame
 		textInput.setText("Inputs");
 	
 		equationDisplay = new JLabel();
+		equationDisplay.addKeyListener(this);
 		equationDisplay.setSize(INNER_PANEL_WIDTH, EQUATION_HEIGHT);
 		equationDisplay.setHorizontalAlignment(SwingConstants.RIGHT);
 		
@@ -127,7 +147,6 @@ public class GUI extends JFrame
 
 		equationDisplay.setText("Equation");
 		textDisplay.add(equationDisplay, BorderLayout.PAGE_START);
-		
 		
 		return textDisplay;
 	}
@@ -140,10 +159,15 @@ public class GUI extends JFrame
 		degrees.setSelected(true);
 		degrees.addActionListener(new RadioButtonListener());
 		
+		degrees.addKeyListener(this);
+		
 		JRadioButton radians = new JRadioButton("Radians");
 		radians.setActionCommand("radians");
 		radians.setMargin(new Insets(0,0,0,0));
 		radians.addActionListener(new RadioButtonListener());
+		
+		
+		radians.addKeyListener(this);
 		
 		JPanel angleTypePanel = new JPanel();
 		angleTypePanel.setLayout(new FlowLayout());
@@ -213,11 +237,14 @@ public class GUI extends JFrame
 	
 					toAdd.setMargin(new Insets(0,0,0,0));
 					toAdd.setText(buttons[i][k].display);
+					if(toAdd.getText().length() >0)
+						keyLinkedButtons.add(toAdd);
+					toAdd.addKeyListener(this);
 					controlPanel.add(toAdd,c);
 				}
 			}
 		}
-		
+
 		return controlPanel;
 		
 	}
@@ -252,7 +279,10 @@ public class GUI extends JFrame
 		copy.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				setDebugText("Copy");
+				Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+				StringSelection cbContents = new StringSelection(textInput.getText());
+				copiedText  = textInput.getText();
+				clipboard.setContents(cbContents, null);
 			}
 			
 		});
@@ -264,7 +294,7 @@ public class GUI extends JFrame
 		paste.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				setDebugText("Paste");
+				textInput.setText(copiedText);
 			}
 			
 		});
@@ -273,11 +303,34 @@ public class GUI extends JFrame
 		edit.add(paste);
 		
 		JMenu help = new JMenu("Help");
-		JMenuItem about = new JMenuItem("About");
-		help.addActionListener(new ActionListener(){
+		JMenuItem about = new JMenuItem("About Calculator");
+
+		aboutWindow = new JFrame();
+		
+		aboutWindow.setSize(500,500);
+		BufferedImage me = null;
+		 try {                
+	          me = ImageIO.read(new File("me.jpg"));
+	       } catch (IOException ex) {
+	            System.out.println("Image could not be loaded");
+	       }
+		final BufferedImage meFinal = me;
+		aboutWindow.getContentPane().add(new JPanel(){
+			protected void paintComponent(Graphics g) {
+		        super.paintComponent(g);
+		        g.drawImage(meFinal, 75, 0, null); // see javadoc for more info on the parameters            
+		    }
+		});
+		
+		JPanel info = new JPanel();
+		info.add(new JLabel("Ford Filer - CS201 - Spring 2014"));
+
+		
+		aboutWindow.add(info,BorderLayout.SOUTH);
+		about.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				setDebugText("Help");
+				aboutWindow.setVisible(true);
 			}
 		});
 		
@@ -336,5 +389,30 @@ public class GUI extends JFrame
 	public static CalculatorButton N0 = new CalculatorButton("0");
 	public static CalculatorButton DEC = new CalculatorButton(".");
 	public static CalculatorButton PLUS = new CalculatorButton("+");
+	
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void keyTyped(KeyEvent arg0) 
+	{
+		char typed = arg0.getKeyChar();
+		System.out.println(typed);
+		for(int i=0;i<keyLinkedButtons.size();i++)
+		{
+			if(keyLinkedButtons.get(i).getText().charAt(0) == typed)
+			{
+				keyLinkedButtons.get(i).doClick();
+			}
+		}
+		
+	}
 
 }
