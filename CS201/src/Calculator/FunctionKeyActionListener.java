@@ -95,200 +95,18 @@ public class FunctionKeyActionListener implements ActionListener
 			inputLabel.setText(Math.PI+"");
 			NumberKeyActionListener.clear = true;
 		}
-		else if(button == GUI.SIN)
-		{
-			if(RadioButtonListener.radians)
-			{
-				equationLabel.setText(equationLabel.getText()+"sinr("+inputLabel.getText()+")");
-				simpleEquation = simpleEquation + Math.sin(Double.parseDouble(inputLabel.getText()));
-			}
-			else
-			{
-				equationLabel.setText(equationLabel.getText()+"sind("+inputLabel.getText()+")");
-				simpleEquation = simpleEquation + Math.sin(Math.toRadians(Double.parseDouble(inputLabel.getText())));
-			}
-			
-			NumberKeyActionListener.clear = true;
-		}
-		else if(button == GUI.COS)
-		{
-			if(RadioButtonListener.radians)
-			{
-				equationLabel.setText(equationLabel.getText()+"cosr("+inputLabel.getText()+")");
-				simpleEquation = simpleEquation + Math.cos(Double.parseDouble(inputLabel.getText()));
-			}
-			else
-			{
-				equationLabel.setText(equationLabel.getText()+"cosd("+inputLabel.getText()+")");
-				simpleEquation = simpleEquation + Math.cos(Math.toRadians(Double.parseDouble(inputLabel.getText())));
-			}
-			
-			NumberKeyActionListener.clear = true;
-		}
-		else if(button == GUI.TAN)
-		{
-			if(RadioButtonListener.radians)
-			{
-				equationLabel.setText(equationLabel.getText()+"tanr("+inputLabel.getText()+")");
-				simpleEquation = simpleEquation + Math.tan(Double.parseDouble(inputLabel.getText()));
-			}
-			else
-			{
-				equationLabel.setText(equationLabel.getText()+"tand("+inputLabel.getText()+")");
-				simpleEquation = simpleEquation + Math.tan(Math.toRadians(Double.parseDouble(inputLabel.getText())));
-			}
-			
-			NumberKeyActionListener.clear = true;
-		}
-		else if(button == GUI.SINH)
-		{
-			if(RadioButtonListener.radians)
-			{
-				equationLabel.setText(equationLabel.getText()+"sinhr("+inputLabel.getText()+")");
-				simpleEquation = simpleEquation + Math.sinh(Double.parseDouble(inputLabel.getText()));
-			}
-			else
-			{
-				equationLabel.setText(equationLabel.getText()+"sinhd("+inputLabel.getText()+")");
-				simpleEquation = simpleEquation + Math.sinh(Math.toRadians(Double.parseDouble(inputLabel.getText())));
-			}
-			
-			NumberKeyActionListener.clear = true;
-		}
-		else if(button == GUI.COSH)
-		{
-			if(RadioButtonListener.radians)
-			{
-				equationLabel.setText(equationLabel.getText()+"coshr("+inputLabel.getText()+")");
-				simpleEquation = simpleEquation + Math.cosh(Double.parseDouble(inputLabel.getText()));
-			}
-			else
-			{
-				equationLabel.setText(equationLabel.getText()+"coshd("+inputLabel.getText()+")");
-				simpleEquation = simpleEquation + Math.cosh(Math.toRadians(Double.parseDouble(inputLabel.getText())));
-			}
-			
-			NumberKeyActionListener.clear = true;
-		}
-		else if(button == GUI.TANH)
-		{
-			if(RadioButtonListener.radians)
-			{
-				equationLabel.setText(equationLabel.getText()+"tanhr("+inputLabel.getText()+")");
-				simpleEquation = simpleEquation + Math.tanh(Double.parseDouble(inputLabel.getText()));
-			}
-			else
-			{
-				equationLabel.setText(equationLabel.getText()+"tanhd("+inputLabel.getText()+")");
-				simpleEquation = simpleEquation + Math.tanh(Math.toRadians(Double.parseDouble(inputLabel.getText())));
-			}
-			
-			NumberKeyActionListener.clear = true;
-		}
-		else if(button == GUI.INVS)
-		{
-			if(RadioButtonListener.radians)
-			{
-				equationLabel.setText(equationLabel.getText()+"asinr("+inputLabel.getText()+")");
-				simpleEquation = simpleEquation + Math.asin(Double.parseDouble(inputLabel.getText()));
-			}
-			else
-			{
-				equationLabel.setText(equationLabel.getText()+"asind("+inputLabel.getText()+")");
-				simpleEquation = simpleEquation + Math.asin(Math.toRadians(Double.parseDouble(inputLabel.getText())));
-			}
-			gui.toInverse();
-			NumberKeyActionListener.clear = true;
-		}
-		else if(button == GUI.INVSH)
-		{
-			if(RadioButtonListener.radians)
-			{
-				equationLabel.setText(equationLabel.getText()+"asinhr("+inputLabel.getText()+")");
-				simpleEquation = simpleEquation + asinh(Double.parseDouble(inputLabel.getText()));
-			}
-			else
-			{
-				equationLabel.setText(equationLabel.getText()+"asinhd("+inputLabel.getText()+")");
-				simpleEquation = simpleEquation + asinh(Math.toRadians(Double.parseDouble(inputLabel.getText())));
-			}
-			gui.toInverse();
-			NumberKeyActionListener.clear = true;
-		}
-		else if(button == GUI.INVC)
-		{
-			if(RadioButtonListener.radians)
-			{
-				equationLabel.setText(equationLabel.getText()+"acosr("+inputLabel.getText()+")");
-				simpleEquation = simpleEquation + Math.acos(Double.parseDouble(inputLabel.getText()));
-			}
-			else
-			{
-				equationLabel.setText(equationLabel.getText()+"acosd("+inputLabel.getText()+")");
-				simpleEquation = simpleEquation + Math.acos(Math.toRadians(Double.parseDouble(inputLabel.getText())));
-			}
-			gui.toInverse();
-			NumberKeyActionListener.clear = true;
-		}
-		else if(button == GUI.INVCH)
-		{
-			if(RadioButtonListener.radians)
-			{
-				equationLabel.setText(equationLabel.getText()+"acoshr("+inputLabel.getText()+")");
-				simpleEquation = simpleEquation + acosh(Double.parseDouble(inputLabel.getText()));
-			}
-			else
-			{
-				equationLabel.setText(equationLabel.getText()+"acoshd("+inputLabel.getText()+")");
-				simpleEquation = simpleEquation + acosh(Math.toRadians(Double.parseDouble(inputLabel.getText())));
-			}
-			gui.toInverse();
-			NumberKeyActionListener.clear = true;
-		}
-		else if(button == GUI.INVT)
-		{
-			if(RadioButtonListener.radians)
-			{
-				equationLabel.setText(equationLabel.getText()+"atanr("+inputLabel.getText()+")");
-				simpleEquation = simpleEquation + Math.atan(Double.parseDouble(inputLabel.getText()));
-			}
-			else
-			{
-				equationLabel.setText(equationLabel.getText()+"atand("+inputLabel.getText()+")");
-				simpleEquation = simpleEquation + Math.atan(Math.toRadians(Double.parseDouble(inputLabel.getText())));
-			}
-			gui.toInverse();
-			NumberKeyActionListener.clear = true;
-		}
-		else if(button == GUI.INVTH)
-		{
-			if(RadioButtonListener.radians)
-			{
-				equationLabel.setText(equationLabel.getText()+"atanhr("+inputLabel.getText()+")");
-				simpleEquation = simpleEquation + atanh(Double.parseDouble(inputLabel.getText()));
-			}
-			else
-			{
-				equationLabel.setText(equationLabel.getText()+"atanhd("+inputLabel.getText()+")");
-				simpleEquation = simpleEquation + atanh(Math.toRadians(Double.parseDouble(inputLabel.getText())));
-			}
-			gui.toInverse();
-			NumberKeyActionListener.clear = true;
-		}
 		
-		else if(button == GUI.EX)
+		else if (button == GUI.EQ)
 		{
-			equationLabel.setText(equationLabel.getText()+"powe("+inputLabel.getText()+")");
-			simpleEquation = simpleEquation + Math.pow(Math.E,Double.parseDouble(inputLabel.getText()));
-			gui.toInverse();
-			NumberKeyActionListener.clear = true;
-		}
-		else if(button == GUI.XSQ)
-		{
-
-			equationLabel.setText(equationLabel.getText()+"sqr("+inputLabel.getText()+")");
-			simpleEquation = simpleEquation + Math.pow(Double.parseDouble(inputLabel.getText()),2);
-			
+			if(!NumberKeyActionListener.clear)
+			{
+				equationLabel.setText(equationLabel.getText()+inputLabel.getText());
+				simpleEquation = simpleEquation + inputLabel.getText();
+				System.out.println("simple = "+simpleEquation);
+			}
+			double ans = evaluateEquation(simpleEquation);
+			if(!error)
+				inputLabel.setText(ans+"");
 			NumberKeyActionListener.clear = true;
 		}
 		else if(button == GUI.MOD)
@@ -315,65 +133,21 @@ public class FunctionKeyActionListener implements ActionListener
 			
 			NumberKeyActionListener.clear = true;
 		}
-		else if(button == GUI.FACT)
-		{
-
-			equationLabel.setText(equationLabel.getText()+"fact("+inputLabel.getText()+")");
-			simpleEquation = simpleEquation + factorial(Double.parseDouble(inputLabel.getText()));
-			
-			NumberKeyActionListener.clear = true;
-		}
-		else if(button == GUI.SQRT)
-		{
-
-			equationLabel.setText(equationLabel.getText()+"sqrt("+inputLabel.getText()+")");
-			simpleEquation = simpleEquation + Math.sqrt(Double.parseDouble(inputLabel.getText()));
-			
-			NumberKeyActionListener.clear = true;
-		}
-		else if(button == GUI.CUBE)
-		{
-
-			equationLabel.setText(equationLabel.getText()+"cube("+inputLabel.getText()+")");
-			simpleEquation = simpleEquation + Math.pow(Double.parseDouble(inputLabel.getText()),3);
-			
-			NumberKeyActionListener.clear = true;
-		}
-		else if(button == GUI.ROOT3)
-		{
-
-			equationLabel.setText(equationLabel.getText()+"cuberoot("+inputLabel.getText()+")");
-			simpleEquation = simpleEquation + Math.pow(Double.parseDouble(inputLabel.getText()),(1.0/3.0));
-			
-			NumberKeyActionListener.clear = true;
-		}
-		else if(button == GUI.TENX)
-		{
-
-			equationLabel.setText(equationLabel.getText()+"powten("+inputLabel.getText()+")");
-			simpleEquation = simpleEquation + Math.pow(10,Double.parseDouble(inputLabel.getText()));
-			
-			NumberKeyActionListener.clear = true;
-		}
-		else if(button == GUI.LOG)
-		{
-
-			equationLabel.setText(equationLabel.getText()+"log("+inputLabel.getText()+")");
-			simpleEquation = simpleEquation + Math.log10(Double.parseDouble(inputLabel.getText()));
-			
-			NumberKeyActionListener.clear = true;
-		}
-		else if(button == GUI.LN)
-		{
-
-			equationLabel.setText(equationLabel.getText()+"ln("+inputLabel.getText()+")");
-			simpleEquation = simpleEquation + Math.log(Double.parseDouble(inputLabel.getText()));
-			
-			NumberKeyActionListener.clear = true;
-		}
 		else if(button == GUI.INV)
 		{
 			gui.toInverse();
+		}
+		else if(button == GUI.RP)
+		{
+			equationLabel.setText(equationLabel.getText()+inputLabel.getText()+")");
+			simpleEquation = simpleEquation + inputLabel.getText()+")";
+			NumberKeyActionListener.clear = true;
+			
+		}
+		else if(button == GUI.LP)
+		{
+			equationLabel.setText(equationLabel.getText()+"(");
+			simpleEquation = simpleEquation + "(";
 		}
 		else if (button.is4Function() || button == GUI.MOD)
 		{
@@ -383,23 +157,283 @@ public class FunctionKeyActionListener implements ActionListener
 				simpleEquation = simpleEquation + inputLabel.getText();
 				System.out.println("simple = "+simpleEquation);
 			}
-			inputLabel.setText(evaluateEquation(simpleEquation)+"");
+			double ans = evaluateEquation(simpleEquation);
+			if(!error)
+				inputLabel.setText(ans+"");
 			equationLabel.setText(equationLabel.getText()+" "+button.display+" ");
 			simpleEquation = simpleEquation +" "+button.display+" ";
 			System.out.println("simple = "+simpleEquation);
 			NumberKeyActionListener.clear = true;
 		}
-		else if (button == GUI.EQ)
+		
+		else
 		{
-			if(!NumberKeyActionListener.clear)
+		
+			if(button == GUI.SIN)
 			{
-				equationLabel.setText(equationLabel.getText()+inputLabel.getText());
-				simpleEquation = simpleEquation + inputLabel.getText();
-				System.out.println("simple = "+simpleEquation);
+				if(RadioButtonListener.radians)
+				{
+					equationLabel.setText(equationLabel.getText()+"sinr("+inputLabel.getText()+")");
+					simpleEquation = simpleEquation + Math.sin(Double.parseDouble(inputLabel.getText()));
+	
+				}
+				else
+				{
+					equationLabel.setText(equationLabel.getText()+"sind("+inputLabel.getText()+")");
+					simpleEquation = simpleEquation + Math.sin(Math.toRadians(Double.parseDouble(inputLabel.getText())));
+				}
+				
+				NumberKeyActionListener.clear = true;
 			}
-			inputLabel.setText(evaluateEquation(simpleEquation)+"");
-			NumberKeyActionListener.clear = true;
+			else if(button == GUI.COS)
+			{
+				if(RadioButtonListener.radians)
+				{
+					equationLabel.setText(equationLabel.getText()+"cosr("+inputLabel.getText()+")");
+					simpleEquation = simpleEquation + Math.cos(Double.parseDouble(inputLabel.getText()));
+				}
+				else
+				{
+					equationLabel.setText(equationLabel.getText()+"cosd("+inputLabel.getText()+")");
+					simpleEquation = simpleEquation + Math.cos(Math.toRadians(Double.parseDouble(inputLabel.getText())));
+				}
+				
+				NumberKeyActionListener.clear = true;
+			}
+			else if(button == GUI.TAN)
+			{
+				if(RadioButtonListener.radians)
+				{
+					equationLabel.setText(equationLabel.getText()+"tanr("+inputLabel.getText()+")");
+					simpleEquation = simpleEquation + Math.tan(Double.parseDouble(inputLabel.getText()));
+				}
+				else
+				{
+					equationLabel.setText(equationLabel.getText()+"tand("+inputLabel.getText()+")");
+					simpleEquation = simpleEquation + Math.tan(Math.toRadians(Double.parseDouble(inputLabel.getText())));
+				}
+				
+				NumberKeyActionListener.clear = true;
+			}
+			else if(button == GUI.SINH)
+			{
+				if(RadioButtonListener.radians)
+				{
+					equationLabel.setText(equationLabel.getText()+"sinhr("+inputLabel.getText()+")");
+					simpleEquation = simpleEquation + Math.sinh(Double.parseDouble(inputLabel.getText()));
+				}
+				else
+				{
+					equationLabel.setText(equationLabel.getText()+"sinhd("+inputLabel.getText()+")");
+					simpleEquation = simpleEquation + Math.sinh(Math.toRadians(Double.parseDouble(inputLabel.getText())));
+				}
+				
+				NumberKeyActionListener.clear = true;
+			}
+			else if(button == GUI.COSH)
+			{
+				if(RadioButtonListener.radians)
+				{
+					equationLabel.setText(equationLabel.getText()+"coshr("+inputLabel.getText()+")");
+					simpleEquation = simpleEquation + Math.cosh(Double.parseDouble(inputLabel.getText()));
+				}
+				else
+				{
+					equationLabel.setText(equationLabel.getText()+"coshd("+inputLabel.getText()+")");
+					simpleEquation = simpleEquation + Math.cosh(Math.toRadians(Double.parseDouble(inputLabel.getText())));
+				}
+				
+				NumberKeyActionListener.clear = true;
+			}
+			else if(button == GUI.TANH)
+			{
+				if(RadioButtonListener.radians)
+				{
+					equationLabel.setText(equationLabel.getText()+"tanhr("+inputLabel.getText()+")");
+					simpleEquation = simpleEquation + Math.tanh(Double.parseDouble(inputLabel.getText()));
+				}
+				else
+				{
+					equationLabel.setText(equationLabel.getText()+"tanhd("+inputLabel.getText()+")");
+					simpleEquation = simpleEquation + Math.tanh(Math.toRadians(Double.parseDouble(inputLabel.getText())));
+				}
+				
+				NumberKeyActionListener.clear = true;
+			}
+			else if(button == GUI.INVS)
+			{
+				if(RadioButtonListener.radians)
+				{
+					equationLabel.setText(equationLabel.getText()+"asinr("+inputLabel.getText()+")");
+					simpleEquation = simpleEquation + Math.asin(Double.parseDouble(inputLabel.getText()));
+				}
+				else
+				{
+					equationLabel.setText(equationLabel.getText()+"asind("+inputLabel.getText()+")");
+					simpleEquation = simpleEquation + Math.asin(Math.toRadians(Double.parseDouble(inputLabel.getText())));
+				}
+				gui.toInverse();
+				NumberKeyActionListener.clear = true;
+			}
+			else if(button == GUI.INVSH)
+			{
+				if(RadioButtonListener.radians)
+				{
+					equationLabel.setText(equationLabel.getText()+"asinhr("+inputLabel.getText()+")");
+					simpleEquation = simpleEquation + asinh(Double.parseDouble(inputLabel.getText()));
+				}
+				else
+				{
+					equationLabel.setText(equationLabel.getText()+"asinhd("+inputLabel.getText()+")");
+					simpleEquation = simpleEquation + asinh(Math.toRadians(Double.parseDouble(inputLabel.getText())));
+				}
+				gui.toInverse();
+				NumberKeyActionListener.clear = true;
+			}
+			else if(button == GUI.INVC)
+			{
+				if(RadioButtonListener.radians)
+				{
+					equationLabel.setText(equationLabel.getText()+"acosr("+inputLabel.getText()+")");
+					simpleEquation = simpleEquation + Math.acos(Double.parseDouble(inputLabel.getText()));
+				}
+				else
+				{
+					equationLabel.setText(equationLabel.getText()+"acosd("+inputLabel.getText()+")");
+					simpleEquation = simpleEquation + Math.acos(Math.toRadians(Double.parseDouble(inputLabel.getText())));
+				}
+				gui.toInverse();
+				NumberKeyActionListener.clear = true;
+			}
+			else if(button == GUI.INVCH)
+			{
+				if(RadioButtonListener.radians)
+				{
+					equationLabel.setText(equationLabel.getText()+"acoshr("+inputLabel.getText()+")");
+					simpleEquation = simpleEquation + acosh(Double.parseDouble(inputLabel.getText()));
+				}
+				else
+				{
+					equationLabel.setText(equationLabel.getText()+"acoshd("+inputLabel.getText()+")");
+					simpleEquation = simpleEquation + acosh(Math.toRadians(Double.parseDouble(inputLabel.getText())));
+				}
+				gui.toInverse();
+				NumberKeyActionListener.clear = true;
+			}
+			else if(button == GUI.INVT)
+			{
+				if(RadioButtonListener.radians)
+				{
+					equationLabel.setText(equationLabel.getText()+"atanr("+inputLabel.getText()+")");
+					simpleEquation = simpleEquation + Math.atan(Double.parseDouble(inputLabel.getText()));
+				}
+				else
+				{
+					equationLabel.setText(equationLabel.getText()+"atand("+inputLabel.getText()+")");
+					simpleEquation = simpleEquation + Math.atan(Math.toRadians(Double.parseDouble(inputLabel.getText())));
+				}
+				gui.toInverse();
+				NumberKeyActionListener.clear = true;
+			}
+			else if(button == GUI.INVTH)
+			{
+				if(RadioButtonListener.radians)
+				{
+					equationLabel.setText(equationLabel.getText()+"atanhr("+inputLabel.getText()+")");
+					simpleEquation = simpleEquation + atanh(Double.parseDouble(inputLabel.getText()));
+				}
+				else
+				{
+					equationLabel.setText(equationLabel.getText()+"atanhd("+inputLabel.getText()+")");
+					simpleEquation = simpleEquation + atanh(Math.toRadians(Double.parseDouble(inputLabel.getText())));
+				}
+				gui.toInverse();
+				NumberKeyActionListener.clear = true;
+			}
+			
+			else if(button == GUI.EX)
+			{
+				equationLabel.setText(equationLabel.getText()+"powe("+inputLabel.getText()+")");
+				simpleEquation = simpleEquation + Math.pow(Math.E,Double.parseDouble(inputLabel.getText()));
+				gui.toInverse();
+				NumberKeyActionListener.clear = true;
+			}
+			else if(button == GUI.XSQ)
+			{
+	
+				equationLabel.setText(equationLabel.getText()+"sqr("+inputLabel.getText()+")");
+				simpleEquation = simpleEquation + Math.pow(Double.parseDouble(inputLabel.getText()),2);
+				
+				NumberKeyActionListener.clear = true;
+			}
+			
+			else if(button == GUI.FACT)
+			{
+	
+				equationLabel.setText(equationLabel.getText()+"fact("+inputLabel.getText()+")");
+				simpleEquation = simpleEquation + factorial(Double.parseDouble(inputLabel.getText()));
+				
+				NumberKeyActionListener.clear = true;
+			}
+			else if(button == GUI.SQRT)
+			{
+	
+				equationLabel.setText(equationLabel.getText()+"sqrt("+inputLabel.getText()+")");
+				simpleEquation = simpleEquation + Math.sqrt(Double.parseDouble(inputLabel.getText()));
+				
+				NumberKeyActionListener.clear = true;
+			}
+			else if(button == GUI.CUBE)
+			{
+	
+				equationLabel.setText(equationLabel.getText()+"cube("+inputLabel.getText()+")");
+				simpleEquation = simpleEquation + Math.pow(Double.parseDouble(inputLabel.getText()),3);
+				
+				NumberKeyActionListener.clear = true;
+			}
+			else if(button == GUI.ROOT3)
+			{
+	
+				equationLabel.setText(equationLabel.getText()+"cuberoot("+inputLabel.getText()+")");
+				simpleEquation = simpleEquation + Math.pow(Double.parseDouble(inputLabel.getText()),(1.0/3.0));
+				
+				NumberKeyActionListener.clear = true;
+			}
+			else if(button == GUI.TENX)
+			{
+	
+				equationLabel.setText(equationLabel.getText()+"powten("+inputLabel.getText()+")");
+				simpleEquation = simpleEquation + Math.pow(10,Double.parseDouble(inputLabel.getText()));
+				
+				NumberKeyActionListener.clear = true;
+			}
+			else if(button == GUI.LOG)
+			{
+	
+				equationLabel.setText(equationLabel.getText()+"log("+inputLabel.getText()+")");
+				simpleEquation = simpleEquation + Math.log10(Double.parseDouble(inputLabel.getText()));
+				
+				NumberKeyActionListener.clear = true;
+			}
+			else if(button == GUI.LN)
+			{
+	
+				equationLabel.setText(equationLabel.getText()+"ln("+inputLabel.getText()+")");
+				simpleEquation = simpleEquation + Math.log(Double.parseDouble(inputLabel.getText()));
+				
+				NumberKeyActionListener.clear = true;
+			}
+			int lastSpace = simpleEquation.lastIndexOf(" ");
+			if(lastSpace !=-1)
+			{
+				inputLabel.setText(simpleEquation.substring(lastSpace));
+			}
+			else
+			{
+				inputLabel.setText(simpleEquation);
+			}
 		}
+		
 		lastPressed = button;
 	}
 
@@ -451,8 +485,10 @@ public class FunctionKeyActionListener implements ActionListener
 	{
 		Stack<String> operators = new Stack<String>();
 		Stack<String> operands = new Stack<String>();
+		System.out.println("infix:" + infix);
 		infix = infix.replaceAll("\\(","\\( ");
 		infix = infix.replaceAll("\\)"," \\)");
+		System.out.println("infix:" + infix);
 		StringTokenizer tok = new StringTokenizer(infix," ");
 
 		while(tok.hasMoreTokens())
@@ -466,7 +502,18 @@ public class FunctionKeyActionListener implements ActionListener
 			{
 				operators.push(token);
 			}
-			else if(!precedence(operators.peek(),token))
+			else if(token.equals(")"))
+			{
+				while(!operators.peek().equals("("))
+				{
+					String operator = safePop(operators);
+					String rightOperand = safePop(operands);
+					String leftOperand = safePop(operands);
+					operands.push(operator+" "+leftOperand+rightOperand);
+				}
+				operators.pop();
+			}
+			else if(!precedence(operators.peek(),token) )
 			{
 				while(!operators.empty() && !precedence(operators.peek(),token))
 				{
@@ -517,6 +564,10 @@ public class FunctionKeyActionListener implements ActionListener
 				return true;
 			}
 		}
+		if(potLower.equals("(") || potLower.equals(")"))
+		{
+			return true;
+		}
 		if(potHigher.equals("^"))
 		{
 			return true;
@@ -552,7 +603,23 @@ public class FunctionKeyActionListener implements ActionListener
 				progress.push(operationResult);
 			}
 		}
-		double result = Double.parseDouble(progress.pop());
+		double result = 0;
+		try
+		{
+			result = Double.parseDouble(progress.pop());
+		}
+		catch (NumberFormatException e)
+		{
+			error = true;
+			inputLabel.setText("Error: expression syntax");
+			return 0;
+		}
+		if(Double.isInfinite(result) || Double.isNaN(result))
+		{
+			error = true;
+			inputLabel.setText("Error: infinite or divide by 0");
+			return 0;
+		}
 		return round(result,15);
 	}
 	// from http://stackoverflow.com/questions/2808535/round-a-double-to-2-decimal-places

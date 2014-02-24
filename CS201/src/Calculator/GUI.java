@@ -436,8 +436,8 @@ public class GUI extends JFrame implements KeyListener
 	
 	public static CalculatorButton INV = new CalculatorButton("Inv");
 	public static CalculatorButton LN = new CalculatorButton("ln");
-	public static CalculatorButton RP = new CalculatorButton("(");
-	public static CalculatorButton LP = new CalculatorButton(")");
+	public static CalculatorButton RP = new CalculatorButton(")");
+	public static CalculatorButton LP = new CalculatorButton("(");
 	public static CalculatorButton BKSP = new CalculatorButton("\u2190");
 	public static CalculatorButton CE = new CalculatorButton("CE");
 	public static CalculatorButton C = new CalculatorButton("C");
@@ -489,20 +489,33 @@ public class GUI extends JFrame implements KeyListener
 	
 	
 	@Override
-	public void keyPressed(KeyEvent arg0) {
-		// TODO Auto-generated method stub
+	public void keyPressed(KeyEvent arg0) 
+	{
 		
 	}
 	@Override
-	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
+	public void keyReleased(KeyEvent arg0) 
+	{	
+		if(arg0.getKeyCode() == KeyEvent.VK_ENTER)
+		{
+			for(int i=0;i<keyLinkedButtons.size();i++)
+			{
+				if(keyLinkedButtons.get(i).getText().charAt(0) == '=')
+				{
+					//System.out.println("Button clicked = " +)
+					keyLinkedButtons.get(i).doClick();
+					break;
+				}
+				
+			}
+		}
 		
 	}
 	@Override
 	public void keyTyped(KeyEvent arg0) 
 	{
 		char typed = arg0.getKeyChar();
-		System.out.println(typed);
+		
 		for(int i=0;i<keyLinkedButtons.size();i++)
 		{
 			if(keyLinkedButtons.get(i).getText().charAt(0) == typed)
@@ -511,6 +524,7 @@ public class GUI extends JFrame implements KeyListener
 				keyLinkedButtons.get(i).doClick();
 				break;
 			}
+			
 		}
 		
 	}
