@@ -95,6 +95,12 @@ public class FunctionKeyActionListener implements ActionListener
 			inputLabel.setText(Math.PI+"");
 			NumberKeyActionListener.clear = true;
 		}
+		else if(button == GUI.TWOPI)
+		{
+			inputLabel.setText(Math.PI*2+"");
+			NumberKeyActionListener.clear = true;
+			gui.toInverse();
+		}
 		
 		else if (button == GUI.EQ)
 		{
@@ -149,21 +155,24 @@ public class FunctionKeyActionListener implements ActionListener
 			equationLabel.setText(equationLabel.getText()+"(");
 			simpleEquation = simpleEquation + "(";
 		}
-		else if (button.is4Function() || button == GUI.MOD)
+		else if ((button.is4Function() || button == GUI.MOD) )
 		{
-			if(!NumberKeyActionListener.clear)
+			if((lastPressed == null || !lastPressed.is4Function()))
 			{
-				equationLabel.setText(equationLabel.getText()+inputLabel.getText());
-				simpleEquation = simpleEquation + inputLabel.getText();
+				if(!NumberKeyActionListener.clear)
+				{
+					equationLabel.setText(equationLabel.getText()+inputLabel.getText());
+					simpleEquation = simpleEquation + inputLabel.getText();
+					System.out.println("simple = "+simpleEquation);
+				}
+				double ans = evaluateEquation(simpleEquation);
+				if(!error)
+					inputLabel.setText(ans+"");
+				equationLabel.setText(equationLabel.getText()+" "+button.display+" ");
+				simpleEquation = simpleEquation +" "+button.display+" ";
 				System.out.println("simple = "+simpleEquation);
+				NumberKeyActionListener.clear = true;
 			}
-			double ans = evaluateEquation(simpleEquation);
-			if(!error)
-				inputLabel.setText(ans+"");
-			equationLabel.setText(equationLabel.getText()+" "+button.display+" ");
-			simpleEquation = simpleEquation +" "+button.display+" ";
-			System.out.println("simple = "+simpleEquation);
-			NumberKeyActionListener.clear = true;
 		}
 		
 		else
@@ -426,11 +435,11 @@ public class FunctionKeyActionListener implements ActionListener
 			int lastSpace = simpleEquation.lastIndexOf(" ");
 			if(lastSpace !=-1)
 			{
-				inputLabel.setText(simpleEquation.substring(lastSpace));
+				inputLabel.setText(round(Double.parseDouble(simpleEquation.substring(lastSpace)),15)+"");
 			}
 			else
 			{
-				inputLabel.setText(simpleEquation);
+				inputLabel.setText(round(Double.parseDouble(simpleEquation),15)+"");
 			}
 		}
 		

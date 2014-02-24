@@ -30,33 +30,34 @@ public class NumberKeyActionListener implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent arg0) 
 	{
-		if(FunctionKeyActionListener.error){}
-		else
-		{
-			if(FunctionKeyActionListener.lastPressed == GUI.NROOT)
-			{
-				double root = (1.0/Double.parseDouble(buttonText));
-				FunctionKeyActionListener.simpleEquation = FunctionKeyActionListener.simpleEquation + root;
-			}
-			if(clear)
-			{
-				inputLabel.setText(buttonText);
-				clear = false;
-			}
-
+			if(FunctionKeyActionListener.error){}
 			else
 			{
-				String labelVal = inputLabel.getText();
-				if(labelVal == "0")
+				if(FunctionKeyActionListener.lastPressed == GUI.NROOT)
+				{
+					double root = (1.0/Double.parseDouble(buttonText));
+					FunctionKeyActionListener.simpleEquation = FunctionKeyActionListener.simpleEquation + root;
+				}
+				if(clear)
 				{
 					inputLabel.setText(buttonText);
-					
+					clear = false;
 				}
+		
 				else
-					inputLabel.setText(labelVal+buttonText);
+				{
+					String labelVal = inputLabel.getText();
+					if(labelVal == "0")
+					{
+						inputLabel.setText(buttonText);
+						
+					}
+					else
+						inputLabel.setText(labelVal+buttonText);
+				}
+				
 			}
-			
-		}
+		FunctionKeyActionListener.lastPressed = null;
 	}
 
 }
