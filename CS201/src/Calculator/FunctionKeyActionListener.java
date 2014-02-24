@@ -185,6 +185,104 @@ public class FunctionKeyActionListener implements ActionListener
 			
 			NumberKeyActionListener.clear = true;
 		}
+		else if(button == GUI.INVS)
+		{
+			if(RadioButtonListener.radians)
+			{
+				equationLabel.setText(equationLabel.getText()+"asinr("+inputLabel.getText()+")");
+				simpleEquation = simpleEquation + Math.asin(Double.parseDouble(inputLabel.getText()));
+			}
+			else
+			{
+				equationLabel.setText(equationLabel.getText()+"asind("+inputLabel.getText()+")");
+				simpleEquation = simpleEquation + Math.asin(Math.toRadians(Double.parseDouble(inputLabel.getText())));
+			}
+			gui.toInverse();
+			NumberKeyActionListener.clear = true;
+		}
+		else if(button == GUI.INVSH)
+		{
+			if(RadioButtonListener.radians)
+			{
+				equationLabel.setText(equationLabel.getText()+"asinhr("+inputLabel.getText()+")");
+				simpleEquation = simpleEquation + asinh(Double.parseDouble(inputLabel.getText()));
+			}
+			else
+			{
+				equationLabel.setText(equationLabel.getText()+"asinhd("+inputLabel.getText()+")");
+				simpleEquation = simpleEquation + asinh(Math.toRadians(Double.parseDouble(inputLabel.getText())));
+			}
+			gui.toInverse();
+			NumberKeyActionListener.clear = true;
+		}
+		else if(button == GUI.INVC)
+		{
+			if(RadioButtonListener.radians)
+			{
+				equationLabel.setText(equationLabel.getText()+"acosr("+inputLabel.getText()+")");
+				simpleEquation = simpleEquation + Math.acos(Double.parseDouble(inputLabel.getText()));
+			}
+			else
+			{
+				equationLabel.setText(equationLabel.getText()+"acosd("+inputLabel.getText()+")");
+				simpleEquation = simpleEquation + Math.acos(Math.toRadians(Double.parseDouble(inputLabel.getText())));
+			}
+			gui.toInverse();
+			NumberKeyActionListener.clear = true;
+		}
+		else if(button == GUI.INVCH)
+		{
+			if(RadioButtonListener.radians)
+			{
+				equationLabel.setText(equationLabel.getText()+"acoshr("+inputLabel.getText()+")");
+				simpleEquation = simpleEquation + acosh(Double.parseDouble(inputLabel.getText()));
+			}
+			else
+			{
+				equationLabel.setText(equationLabel.getText()+"acoshd("+inputLabel.getText()+")");
+				simpleEquation = simpleEquation + acosh(Math.toRadians(Double.parseDouble(inputLabel.getText())));
+			}
+			gui.toInverse();
+			NumberKeyActionListener.clear = true;
+		}
+		else if(button == GUI.INVT)
+		{
+			if(RadioButtonListener.radians)
+			{
+				equationLabel.setText(equationLabel.getText()+"atanr("+inputLabel.getText()+")");
+				simpleEquation = simpleEquation + Math.atan(Double.parseDouble(inputLabel.getText()));
+			}
+			else
+			{
+				equationLabel.setText(equationLabel.getText()+"atand("+inputLabel.getText()+")");
+				simpleEquation = simpleEquation + Math.atan(Math.toRadians(Double.parseDouble(inputLabel.getText())));
+			}
+			gui.toInverse();
+			NumberKeyActionListener.clear = true;
+		}
+		else if(button == GUI.INVTH)
+		{
+			if(RadioButtonListener.radians)
+			{
+				equationLabel.setText(equationLabel.getText()+"atanhr("+inputLabel.getText()+")");
+				simpleEquation = simpleEquation + atanh(Double.parseDouble(inputLabel.getText()));
+			}
+			else
+			{
+				equationLabel.setText(equationLabel.getText()+"atanhd("+inputLabel.getText()+")");
+				simpleEquation = simpleEquation + atanh(Math.toRadians(Double.parseDouble(inputLabel.getText())));
+			}
+			gui.toInverse();
+			NumberKeyActionListener.clear = true;
+		}
+		
+		else if(button == GUI.EX)
+		{
+			equationLabel.setText(equationLabel.getText()+"powe("+inputLabel.getText()+")");
+			simpleEquation = simpleEquation + Math.pow(Math.E,Double.parseDouble(inputLabel.getText()));
+			gui.toInverse();
+			NumberKeyActionListener.clear = true;
+		}
 		else if(button == GUI.XSQ)
 		{
 
@@ -291,6 +389,17 @@ public class FunctionKeyActionListener implements ActionListener
 			System.out.println("simple = "+simpleEquation);
 			NumberKeyActionListener.clear = true;
 		}
+		else if (button == GUI.EQ)
+		{
+			if(!NumberKeyActionListener.clear)
+			{
+				equationLabel.setText(equationLabel.getText()+inputLabel.getText());
+				simpleEquation = simpleEquation + inputLabel.getText();
+				System.out.println("simple = "+simpleEquation);
+			}
+			inputLabel.setText(evaluateEquation(simpleEquation)+"");
+			NumberKeyActionListener.clear = true;
+		}
 		lastPressed = button;
 	}
 
@@ -320,6 +429,22 @@ public class FunctionKeyActionListener implements ActionListener
 		return -1;
     }
 	
+	//inverse hyperbolics from http://answers.yahoo.com/question/index?qid=20110613181448AATATVS
+	
+	static double asinh(double x) 
+	{ 
+	return Math.log(x + Math.sqrt(x*x + 1.0)); 
+	} 
+
+	static double acosh(double x) 
+	{ 
+	return Math.log(x + Math.sqrt(x*x - 1.0)); 
+	} 
+
+	static double atanh(double x) 
+	{ 
+	return 0.5*Math.log( (x + 1.0) / (x - 1.0) ); 
+	} 
 	
 	// algorithm from http://stackoverflow.com/questions/1946896/conversion-from-infix-to-prefix
 	private String convertToPrefix(String infix)
@@ -337,7 +462,7 @@ public class FunctionKeyActionListener implements ActionListener
 			{
 				operands.push(token+" ");
 			}
-			else if(operators.isEmpty() || precedence(operators.peek(),token))
+			else if(token.equals("(") || operators.isEmpty() || precedence(operators.peek(),token))
 			{
 				operators.push(token);
 			}
