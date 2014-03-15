@@ -4,16 +4,19 @@ import java.util.ArrayList;
 
 public class Restaurant 
 {
-	Title title;
-	TableStatusList tableList;
-	ArrayList<Table> tables;
-	ArrayList<Wall> walls;
+	private Title title;
+	private TableStatusList tableList;
+	private ArrayList<Table> tables;
+	private ArrayList<Wall> walls;
+	private Podium podium;
+	
 	Restaurant ()
 	{
 		title = null;
 		tableList = new TableStatusList();
 		tables = new ArrayList<Table>();
 		walls = new ArrayList<Wall>();
+		podium = null;
 	}
 	public Title getTitle() {
 		return title;
@@ -45,4 +48,13 @@ public class Restaurant
 		return walls;
 	}
 	
+	public void setPodium(Podium podium)
+	{
+		this.podium = podium;
+	}
+	
+	public Podium getPodium()
+	{
+		return podium;
+	}
 }

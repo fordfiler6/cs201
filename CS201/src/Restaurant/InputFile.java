@@ -212,6 +212,34 @@ public class InputFile
 		}
 	
 	}
+	void readPodium()
+	{
+		//get podium element
+		Element curElement = (Element)doc.getElementsByTagName("podium").item(0);
+		
+
+		//get location element
+		Element locElement = (Element)curElement.getElementsByTagName("location").item(0);
+		
+		//get title x
+		String x = locElement.getElementsByTagName("x").item(0).getTextContent();
+		
+		//get title y
+		String y = locElement.getElementsByTagName("y").item(0).getTextContent();
+		
+		//get size
+		Element sizeElement = (Element)curElement.getElementsByTagName("size").item(0);
+		
+		//get title x
+		String width = sizeElement.getElementsByTagName("width").item(0).getTextContent();
+		
+		//get title y
+		String height = sizeElement.getElementsByTagName("height").item(0).getTextContent();
+		
+		Podium resPodium = new Podium(new Location(Integer.parseInt(x),Integer.parseInt(y)), Integer.parseInt(width), Integer.parseInt(height));
+		
+		xmlRes.setPodium(resPodium);
+	}
 	Restaurant readContents()
 	{
 		xmlRes = new Restaurant();
@@ -219,6 +247,7 @@ public class InputFile
 		readTableList();
 		readTables();
 		readWalls();
+		readPodium();
 		
 		return xmlRes;
 

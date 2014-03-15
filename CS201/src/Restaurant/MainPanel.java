@@ -9,6 +9,8 @@ import javax.swing.JPanel;
 public class MainPanel extends JPanel
 {
 	Restaurant res;
+	final int TEXT_OFFSET_X = 3;
+	final int TEXT_OFFSET_Y = -4;
 	public MainPanel(Restaurant res) 
 	{
 		this.res = res;
@@ -19,6 +21,7 @@ public class MainPanel extends JPanel
 		super.paint(g);
 		drawTables(g);
 		drawWalls(g);
+		drawPodium(g);
 	}
 	public void drawTables(Graphics g)
 	{
@@ -27,31 +30,57 @@ public class MainPanel extends JPanel
 		{
 			int x = table.getLocation().getX();
 			int y = table.getLocation().getY();
-			if(table.isOccupied())
-			{
-				g.setColor(Color.red);
-			}
-			else
-			{
-				g.setColor(Color.green);
-			}
+		
 			if(table instanceof RoundTable)
 			{
+				if(table.isOccupied())
+				{
+					g.setColor(Color.red);
+				}
+				else
+				{
+					g.setColor(Color.green);
+				}
 				int radius = ((RoundTable) table).getRadius();
 				g.fillOval(x, y, radius, radius);
+				
+				g.setColor(Color.black);
+				g.drawString(table.getNumber()+"", x+radius/2 - TEXT_OFFSET_X, y+radius/2 - TEXT_OFFSET_Y);
 			}
 			else if(table instanceof SquareTable)
 			{
+				if(table.isOccupied())
+				{
+					g.setColor(Color.red);
+				}
+				else
+				{
+					g.setColor(Color.green);
+				}
 				int sLen = ((SquareTable) table).getsLen();
 				
 				g.fillRect(x, y, sLen, sLen);
+				g.setColor(Color.black);
+				g.drawString(table.getNumber()+"", x+sLen/2 - TEXT_OFFSET_X, y+sLen/2 - TEXT_OFFSET_Y);
+
 			}
 			else if(table instanceof RectangleTable)
 			{
+				if(table.isOccupied())
+				{
+					g.setColor(Color.red);
+				}
+				else
+				{
+					g.setColor(Color.green);
+				}
 				int width = ((RectangleTable) table).getWidth();
 				int height = ((RectangleTable) table).getHeight();
 				
 				g.fillRect(x, y, width, height);
+				g.setColor(Color.black);
+				g.drawString(table.getNumber()+"", x+width/2 - TEXT_OFFSET_X, y+height/2 - TEXT_OFFSET_Y);
+
 			}
 		}
 	}
@@ -70,6 +99,23 @@ public class MainPanel extends JPanel
 			
 			g.drawLine(startX, startY, endX, endY);
 		}
+	}
+	
+	public void drawPodium(Graphics g)
+	{
+		Podium podium = res.getPodium();
+		g.setColor(Color.cyan);
+		
+		int x = podium.getLocation().getX();
+		int y = podium.getLocation().getY();
+		int width = podium.getWidth();
+		int height = podium.getHeight();
+		g.fillRect(x, y, width, height);
+		
+		g.setColor(Color.black);
+		g.drawString("P", x+width/2 - TEXT_OFFSET_X, y+height/2 - TEXT_OFFSET_Y);
+
+		
 	}
 
 	
