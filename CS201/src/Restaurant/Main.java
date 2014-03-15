@@ -5,6 +5,8 @@ public class Main
 	public static void main(String[] args)
 	{
 		InputFile in = new InputFile("Assignment4.xml");
-		in.printContents();
+		Restaurant restaurant = in.readContents();
+		
+		GUI gui = new GUI(restaurant);
 	}
 }
