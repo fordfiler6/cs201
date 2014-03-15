@@ -193,9 +193,22 @@ public class InputFile
 		
 		for(int i = 0; i<walls.getLength();i++)
 		{
-			Element wall = (Element)walls.item(0);
+			Element wall = (Element)walls.item(i);
 			Wall toAdd = new Wall();
 			
+			Element startEle = (Element) wall.getElementsByTagName("startlocation").item(0);
+			Element endEle = (Element) wall.getElementsByTagName("endlocation").item(0);
+			
+			int startX = Integer.parseInt(startEle.getElementsByTagName("x").item(0).getTextContent());
+			int startY = Integer.parseInt(startEle.getElementsByTagName("y").item(0).getTextContent());
+			
+			int endX = Integer.parseInt(endEle.getElementsByTagName("x").item(0).getTextContent());
+			int endY = Integer.parseInt(endEle.getElementsByTagName("y").item(0).getTextContent());
+			
+			toAdd.setStart(new Location(startX,startY));
+			toAdd.setEnd(new Location(endX, endY));
+			
+			xmlRes.addWall(toAdd);
 		}
 	
 	}
@@ -205,7 +218,7 @@ public class InputFile
 		readTitleInfo();
 		readTableList();
 		readTables();
-		
+		readWalls();
 		
 		return xmlRes;
 

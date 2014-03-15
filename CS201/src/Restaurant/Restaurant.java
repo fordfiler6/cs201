@@ -7,11 +7,13 @@ public class Restaurant
 	Title title;
 	TableStatusList tableList;
 	ArrayList<Table> tables;
+	ArrayList<Wall> walls;
 	Restaurant ()
 	{
 		title = null;
 		tableList = new TableStatusList();
 		tables = new ArrayList<Table>();
+		walls = new ArrayList<Wall>();
 	}
 	public Title getTitle() {
 		return title;
@@ -32,6 +34,15 @@ public class Restaurant
 	public ArrayList<Table> getTables()
 	{
 		return tables;
+	}
+	
+	public void addWall(Wall wall)
+	{
+		walls.add(wall);
+	}
+	public ArrayList<Wall> getWalls()
+	{
+		return walls;
 	}
 	
 }

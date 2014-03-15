@@ -23,6 +23,7 @@ public class GUI
 	{
 		this.res = res;
 		window = new JFrame();
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setSize(GUI_WIDTH,GUI_HEIGHT);
 		container = new MainPanel(res);
 		container.setSize(GUI_WIDTH,GUI_HEIGHT);
