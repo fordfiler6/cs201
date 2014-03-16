@@ -18,6 +18,19 @@ public class Restaurant
 		walls = new ArrayList<Wall>();
 		podium = null;
 	}
+	
+	public Object[][] getTableData()
+	{
+		Object[][] tableData = new Object[tables.size()][2];
+		for(int i=0;i<tables.size();i++)
+		{
+			tableData[i][0] = tables.get(i).getNumber();
+			tableData[i][1] = tables.get(i).getNumSeats();
+		}
+		
+		return tableData;
+	}
+	
 	public Title getTitle() {
 		return title;
 	}

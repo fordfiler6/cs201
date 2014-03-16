@@ -177,7 +177,7 @@ public class InputFile
 			}
 			
 			int numSeats = Integer.parseInt(table.getElementsByTagName("numseats").item(0).getTextContent());
-			toAdd.setNumber(numSeats);
+			toAdd.setNumSeats(numSeats);
 			
 			xmlRes.addTable(toAdd);
 		
@@ -186,6 +186,7 @@ public class InputFile
 		}
 		
 	}
+
 	void readWalls()
 	{
 		Element curElement = (Element)doc.getElementsByTagName("walls").item(0);

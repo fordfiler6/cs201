@@ -1,6 +1,7 @@
 package Restaurant;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
@@ -18,10 +19,22 @@ public class MainPanel extends JPanel
 	
 	public void paint(Graphics g)
 	{
-		super.paint(g);
-		drawTables(g);
-		drawWalls(g);
-		drawPodium(g);
+		if(res != null)
+		{
+			super.paint(g);
+			drawTitle(g);
+			drawTables(g);
+			drawWalls(g);
+			drawPodium(g);
+		}
+	}
+	public void drawTitle(Graphics g)
+	{
+		String title = res.getTitle().getName();
+		Font font = new Font("Times", Font.BOLD, 18);
+		g.setFont(font);
+		g.drawString(title, res.getTitle().getLocation().getX(), res.getTitle().getLocation().getY());
+		
 	}
 	public void drawTables(Graphics g)
 	{
