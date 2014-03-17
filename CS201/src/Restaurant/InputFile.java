@@ -2,6 +2,7 @@ package Restaurant;
 
 import java.io.File;
 
+import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -10,7 +11,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-public class InputFile 
+public class InputFile
 {
 	Document doc = null;
 	Restaurant xmlRes;
@@ -26,7 +27,12 @@ public class InputFile
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null,
+				    "There was a problem reading your XML file, please try a new one",
+				    "XML Parse Error",
+				    JOptionPane.ERROR_MESSAGE);
+			System.out.println("Faled to read XML");
+			xmlRes = null;
 		}
 	}
 	void readTitleInfo()
@@ -61,6 +67,30 @@ public class InputFile
 		Element locElement = (Element)curElement.getElementsByTagName("location").item(0);
 		
 		
+		Element rowElement = (Element)curElement.getElementsByTagName("rows").item(0);
+		
+		tableList.numRows = Utils.safeParseInt(rowElement.getAttribute("number"));
+		
+		tableList.rowHeight = Utils.safeParseInt(rowElement.getAttribute("height"));
+		
+		Element fontElement = (Element)rowElement.getElementsByTagName("font").item(0);
+		
+		FontStyle font = new FontStyle();
+		
+		font.setFace(fontElement.getAttribute("name"));
+		
+		if((fontElement.getAttribute("type").equalsIgnoreCase("plain")))
+			font.setWeight(FontWeight.PLAIN);
+		else if (fontElement.getAttribute("type").equalsIgnoreCase("bold"))
+			font.setWeight(FontWeight.BOLD);
+		else
+		{
+			//error case
+		}
+		
+		font.setSize(Integer.parseInt(fontElement.getAttribute("size")));
+		
+		tableList.font = font;
 		
 		NodeList cols = curElement.getElementsByTagName("column");
 		
@@ -85,9 +115,9 @@ public class InputFile
 			Location colLoc = new Location(Integer.parseInt(colX),Integer.parseInt(colY));
 			
 			
-			Element fontElement = (Element)col.getElementsByTagName("font").item(0);
+			fontElement = (Element)col.getElementsByTagName("font").item(0);
 			
-			FontStyle font = new FontStyle();
+			font = new FontStyle();
 			
 			font.setFace(fontElement.getAttribute("name"));
 			
@@ -103,6 +133,7 @@ public class InputFile
 			font.setSize(Integer.parseInt(fontElement.getAttribute("size")));
 			
 			tableList.addColumn(new TableColumn(colName,colLoc,font));
+			
 			
 			
 			
@@ -249,6 +280,7 @@ public class InputFile
 		readTables();
 		readWalls();
 		readPodium();
+
 		
 		return xmlRes;
 

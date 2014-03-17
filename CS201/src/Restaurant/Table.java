@@ -6,8 +6,17 @@ public class Table
 	private int numSeats;
 	private Location location;
 	private boolean occupied;
+	private int numSittingAtTable;
 	
-	
+	public int getNumSittingAtTable() 
+	{
+		if(numSittingAtTable==0 && occupied)
+			return numSeats;
+		return numSittingAtTable;
+	}
+	public void setNumSittingAtTable(int numSittingAtTable) {
+		this.numSittingAtTable = numSittingAtTable;
+	}
 	public int getNumber() {
 		return number;
 	}
@@ -30,6 +39,8 @@ public class Table
 		return occupied;
 	}
 	public void setOccupied(boolean occupied) {
+		if(occupied == false)
+			numSittingAtTable = 0;
 		this.occupied = occupied;
 	}
 	

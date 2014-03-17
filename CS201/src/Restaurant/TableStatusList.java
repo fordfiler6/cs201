@@ -7,6 +7,9 @@ public class TableStatusList
 	ArrayList<TableColumn> columns;
 	int numRows;
 	FontStyle font;
+	int rowHeight;
+	public static boolean showOccupied = false;
+	public static boolean showFree = false;
 	
 	TableStatusList()
 	{

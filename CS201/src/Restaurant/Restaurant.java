@@ -21,11 +21,19 @@ public class Restaurant
 	
 	public Object[][] getTableData()
 	{
-		Object[][] tableData = new Object[tables.size()][2];
+		ArrayList<Table> tablesToShow = new ArrayList<Table>();
 		for(int i=0;i<tables.size();i++)
 		{
-			tableData[i][0] = tables.get(i).getNumber();
-			tableData[i][1] = tables.get(i).getNumSeats();
+			if(TableStatusList.showFree && !tables.get(i).isOccupied())
+				tablesToShow.add(tables.get(i));
+			else if(TableStatusList.showOccupied && tables.get(i).isOccupied())
+				tablesToShow.add(tables.get(i));
+		}
+		Object[][] tableData = new Object[tablesToShow.size()][2];
+		for(int i=0;i<tablesToShow.size();i++)
+		{
+			tableData[i][0] = tablesToShow.get(i).getNumber();
+			tableData[i][1] = tablesToShow.get(i).getNumSittingAtTable()+"/"+tablesToShow.get(i).getNumSeats();
 		}
 		
 		return tableData;
