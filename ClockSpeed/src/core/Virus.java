@@ -2,18 +2,8 @@ package core;
 
 import javax.swing.JPanel;
 
-public class GPU extends Property 
+public class Virus extends Space
 {
-	GPU(String name, int cost)
-	{
-		super(name, cost);
-	}
-
-	@Override
-	public int calculateRent() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	@Override
 	public JPanel drawSpace() {

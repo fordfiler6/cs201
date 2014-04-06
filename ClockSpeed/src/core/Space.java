@@ -12,4 +12,13 @@ public abstract class Space
 	{
 		this.name = name;
 	}
+	public Space()
+	{
+		
+	}
+	
+	public String getName()
+	{
+		return name;
+	}
 }

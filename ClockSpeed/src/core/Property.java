@@ -11,4 +11,9 @@ public abstract class Property extends Space
 		super(name);
 		this.cost = cost;
 	}
+	
+	public int getCost()
+	{
+		return cost;
+	}
 }

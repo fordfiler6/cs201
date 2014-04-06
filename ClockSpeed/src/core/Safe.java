@@ -5,6 +5,10 @@ import javax.swing.JPanel;
 public class Safe extends Space
 {
 
+	public Safe()
+	{
+		super("Take a Break");
+	}
 	@Override
 	public JPanel drawSpace() {
 		// TODO Auto-generated method stub

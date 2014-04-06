@@ -1,0 +1,40 @@
+DIST,Allowance,400,,,,,,
+CPU,Intel 80386,1,0,33,6,29,86,128
+CPU,Intel 80486,1,0,50,7,35,105,157
+CPU,Pentium,1,0,100,10,49,147,220
+CPU,Pentium Pro,1,0,166,13,63,188,282
+GPU,Nvidia  GTX Titan,400,,,,,,
+CPU,PII Klamath,1,0,233,15,74,221,331
+CPU,PII Deschutes,1,0,300,17,83,249,373
+MINE,,,,,,,,
+CPU,Celeron Mendocino,1,0,333,18,87,260,390
+SAFE,Just Browsin',,,,,,,
+CPU,PIII Katmai,1,0,450,21,100,300,450
+CPU,PIII Copermine,1,0,500,22,105,314,471
+CPU,Celeron Coppermine,1,0,533,23,107,322,482
+CPU,Pentium M Banias,1,0,900,30,138,415,622
+GPU,Nvidia  GTX Titan,400,,,,,,
+CPU,Pentium M Dothan,1,0,1000,32,145,434,651
+CPU,Celeron M,1,0,1100,33,150,451,677
+VIRUS,,,,,,,,
+CPU,P4 Northwood,1,0,1700,41,186,557,835
+SAFE,Just Browsin',,,,,,,
+CPU,P4 Prescott,1,0,2000,45,200,599,898
+CPU,Core 2 Duo Conroe,2,0,1860,61,270,810,1215
+CPU,Core 2 Duo Wolfdale,2,0,2250,67,295,884,1326
+CPU,Core i6 Clarkdale,2,2,2900,101,439,1317,1975
+GPU,Nvidia  GTX Titan,400,,,,,,
+CPU,Core i5 Lynnfield,4,0,2750,105,453,1360,2040
+CPU,Core i7 Bloomfield,4,0,3000,110,469,1408,2113
+MINE,,,,,,,,
+CPU,Core i7 2GHz,4,4,2000,118,503,1509,2263
+SAFE,Just Browsin',,,,,,,
+CPU,Core i7 2.14GHz,4,4,2143,122,516,1548,2323
+CPU,Core i7 2.2GHz,4,4,2214,124,520,1561,2341
+CPU,Core i7 2.3GHz,4,4,2357,128,532,1596,2395
+CPU,Core i7 2.5 GHz,4,4,2500,132,543,1630,2445
+GPU,Nvidia  GTX Titan,400,,,,,,
+CPU,Core i7 2.5 GHz xTreme,4,4,2571,134,546,1639,2458
+CPU,Core i7 Gulftown,6,0,3200,139,559,1678,2516
+VIRUS,,,,,,,,
+CPU,Core i7 Sandy Bridge,4,4,2800,140,560,1680,2520
