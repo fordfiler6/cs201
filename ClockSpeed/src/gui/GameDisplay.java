@@ -18,15 +18,18 @@ public class GameDisplay
 	
 	//Member Variables
 	JFrame container;
+	GameBoard board;
 
+	private int numPlayers;
 	
-	public GameDisplay()
+	public GameDisplay(int input)
 	{
+		numPlayers = input;
 		container = new JFrame();
 		container.setSize(WIDTH,HEIGHT);
 		container.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		GameBoard board = new GameBoard("CPUMonopoly.csv");
+		board = new GameBoard("CPUMonopoly.csv", numPlayers);
 		board.setPreferredSize(new Dimension(WIDTH,HEIGHT));
 		
 		container.add(board);
@@ -35,5 +38,6 @@ public class GameDisplay
 	public void play()
 	{
 		container.setVisible(true);
+		board.play();
 	}
 }

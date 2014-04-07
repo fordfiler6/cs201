@@ -22,7 +22,7 @@ SAFE,Just Browsin',,,,,,,
 CPU,P4 Prescott,1,0,2000,45,200,599,898
 CPU,Core 2 Duo Conroe,2,0,1860,61,270,810,1215
 CPU,Core 2 Duo Wolfdale,2,0,2250,67,295,884,1326
-CPU,Core i6 Clarkdale,2,2,2900,101,439,1317,1975
+CPU,Core i5 Clarkdale,2,2,2900,101,439,1317,1975
 GPU,Nvidia  GTX Titan,400,,,,,,
 CPU,Core i5 Lynnfield,4,0,2750,105,453,1360,2040
 CPU,Core i7 Bloomfield,4,0,3000,110,469,1408,2113

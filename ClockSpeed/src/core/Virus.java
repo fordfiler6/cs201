@@ -5,6 +5,10 @@ import javax.swing.JPanel;
 public class Virus extends Space
 {
 
+	public Virus()
+	{
+		super("Virus Scan");
+	}
 	@Override
 	public JPanel drawSpace() {
 		// TODO Auto-generated method stub
