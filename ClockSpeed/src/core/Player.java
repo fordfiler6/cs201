@@ -12,69 +12,8 @@ public class Player
 	private ImageIcon piece;
 	private static ArrayList<ImageIcon> pieces = null;
 	private int GPUs = 0;
-	
-	
-	
-	public Space getCurrentLocation() 
-	{
-		return currentLocation;
-	}
-	public void setCurrentLocation(Space currentLocation) 
-	{
-		this.currentLocation = currentLocation;
-	}
-
-	public int getBalance()
-	{
-		return cashBalance;
-	}
-	public ArrayList<Property> getOwnedProperties() 
-	{
-		return ownedProperties;
-	}
-
-	public void setOwnedProperties(ArrayList<Property> ownedProperties) 
-	{
-		this.ownedProperties = ownedProperties;
-	}
-
 	private ArrayList<Property> ownedProperties;
-	public boolean stillPlaying()
-	{
-		return cashBalance>0;
-	}
-	public ImageIcon getPiece() 
-	{
-		return piece;
-	}
-
-	public void setPiece(ImageIcon piece) 
-	{
-		this.piece = piece;
-	}
 	
-	public void purchaseProperty(Property p)
-	{
-		ownedProperties.add(p);
-		cashBalance -= p.getCost();
-		if(p instanceof GPU)
-		{
-			GPUs++;
-		}
-	}
-	public int getGPUs()
-	{
-		return GPUs;
-	}
-	public void lose()
-	{
-		cashBalance = 0;
-		for(Property p : ownedProperties)
-		{
-			p.reset();
-		}
-		ownedProperties = new ArrayList<Property>();
-	}
 	public Player(Space location, Player[] players)
 	{
 		if(pieces ==null)
@@ -138,6 +77,68 @@ public class Player
 		}
 	}
 	
+	public Space getCurrentLocation() 
+	{
+		return currentLocation;
+	}
+	public void setCurrentLocation(Space currentLocation) 
+	{
+		this.currentLocation = currentLocation;
+	}
+
+	public int getBalance()
+	{
+		return cashBalance;
+	}
+	public ArrayList<Property> getOwnedProperties() 
+	{
+		return ownedProperties;
+	}
+
+	public void setOwnedProperties(ArrayList<Property> ownedProperties) 
+	{
+		this.ownedProperties = ownedProperties;
+	}
+
+	
+	public boolean stillPlaying()
+	{
+		return cashBalance>0;
+	}
+	public ImageIcon getPiece() 
+	{
+		return piece;
+	}
+
+	public void setPiece(ImageIcon piece) 
+	{
+		this.piece = piece;
+	}
+	
+	public void purchaseProperty(Property p)
+	{
+		ownedProperties.add(p);
+		cashBalance -= p.getCost();
+		if(p instanceof GPU)
+		{
+			GPUs++;
+		}
+	}
+	public int getGPUs()
+	{
+		return GPUs;
+	}
+	public void lose()
+	{
+		cashBalance = 0;
+		for(Property p : ownedProperties)
+		{
+			p.reset();
+		}
+		ownedProperties = new ArrayList<Property>();
+	}
+
+	
 	public void addMoney(int amount)
 	{
 		cashBalance += amount;
@@ -149,7 +150,7 @@ public class Player
 	
 	public void payRent(int amount, Player p)
 	{
-		System.out.println("Paying rent "+amount);
+		//System.out.println("Paying rent "+amount);
 		cashBalance -= amount;
 		p.addMoney(amount);
 	}

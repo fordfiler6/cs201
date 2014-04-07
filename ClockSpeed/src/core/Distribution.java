@@ -20,7 +20,8 @@ public class Distribution extends Space
 	}
 
 	@Override
-	public void landOnSpace(Player p) {
+	public void landOnSpace(Player p)
+	{
 		p.addMoney(amount);
 		
 	}

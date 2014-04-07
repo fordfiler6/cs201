@@ -4,7 +4,6 @@ import javax.swing.JPanel;
 
 public class CPU extends Property
 {
-	public static final int BASERENT_COST_FACTOR = 15;
 	private int cores, clockSpeed, threads, baseRent, oc1Rent, oc2Rent, oc3Rent, level;
 	
 	private static final double UPGRADE_FACTOR = 0.5;
@@ -92,7 +91,7 @@ public class CPU extends Property
 	{
 		if(p.getBalance() > getUpgradeCost())
 		{
-			if(level < 4)
+			if(level < 3)
 				return true;
 		}
 		return false;
