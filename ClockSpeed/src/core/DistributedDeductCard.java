@@ -17,7 +17,11 @@ public class DistributedDeductCard extends CollectCard
 		p.deductMoney(amount*players.length);
 		for(Player p2 : players)
 		{
-			p2.addMoney(amount);
+			if(p2.stillPlaying())
+			{
+				p2.addMoney(amount);
+				p.deductMoney(amount);
+			}
 		}
 		JOptionPane.showMessageDialog(null, name + " - "+content);
 	}

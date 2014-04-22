@@ -14,10 +14,14 @@ public class DistributedCollectCard extends CollectCard
 
 	public void takeAction(Player p) 
 	{
-		p.addMoney(amount*players.length);
+		
 		for(Player p2 : players)
 		{
-			p2.deductMoney(amount);
+			if(p2.stillPlaying())
+			{
+				p2.deductMoney(amount);
+				p.addMoney(amount);
+			}
 		}
 		JOptionPane.showMessageDialog(null, name + " - "+content);
 	}
