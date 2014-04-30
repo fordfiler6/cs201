@@ -2,22 +2,39 @@ package chat;
 
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class ListenServer extends Thread
 {
 	int portNumber = 7890;
 	ServerSocket sSock = null;
-	try
+	ArrayList<ServerClientThread> connectedClients = new ArrayList<>();
+	public ListenServer()
 	{
-		sSock = new ServerSocket(portNumber);
+		try
+		{
+			sSock = new ServerSocket(portNumber);
+		}
+		catch(Exception e)
+		{
+			
+		}
 	}
-	catch(Exception e)
+	public void run()
 	{
-		
-	}
-	while(true)
-	{
-		Socket cSock = sSock.accept();
-		
+		System.out.println("Listener Started");
+		while(true)
+		{
+			try
+			{
+				Socket cSock = sSock.accept();
+				connectedClients.add(new ServerClientThread(cSock, connectedClients));
+				connectedClients.get(connectedClients.size()-1).start();	
+			}
+			catch(Exception e)
+			{
+			
+			}
+		}
 	}
 }

@@ -7,7 +7,8 @@ public class CPU extends Property
 	private int cores, clockSpeed, threads, baseRent, oc1Rent, oc2Rent, oc3Rent, level;
 	
 	private static final double UPGRADE_FACTOR = 0.5;
-
+	private static final int BASERENT_COST_FACTOR = 15;
+	
 	public CPU(String _name, int _coreCount, int _threadCount, int _clockSpeed, int _baseRent,int _oc1, int _oc2,int _oc3)
 	{
 		super(_name, _baseRent*BASERENT_COST_FACTOR);
