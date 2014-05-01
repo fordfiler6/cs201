@@ -18,6 +18,7 @@ public class Client extends Thread
 	Socket cSock = null;
 	int clientId;
 	Vector<String> messages;
+	ChatGUI gui;
 	public Semaphore messageLock = new Semaphore(1);
 	public Client()
 	{
@@ -31,11 +32,18 @@ public class Client extends Thread
 		{
 			System.out.println("Failed to create Client sockett");
 		}
+		gui = new ChatGUI(this);
 	}
 	public void sendMessage(String msg)
 	{
 		messageLock.acquireUninterruptibly();
 		messages.add("msg:"+"all"+":"+msg);
+		messageLock.release();
+	}
+	public void sendMessageTo(String msg, int to)
+	{
+		messageLock.acquireUninterruptibly();
+		messages.add("msg:"+to+":"+msg);
 		messageLock.release();
 	}
 	public void run()
@@ -79,11 +87,18 @@ public class Client extends Thread
 					{
 						clientId = Integer.parseInt(tok.nextToken());
 					}
-					else if(instruction.equalsIgnoreCase("msg"))
+					else if(instruction.equalsIgnoreCase("msgp"))
+					{
+						String from = tok.nextToken();
+						String to = tok.nextToken();
+						String msg = tok.nextToken();
+						gui.addMsgPrivate(msg, from, to);
+					}
+					else if(instruction.equalsIgnoreCase("msga"))
 					{
 						String from = tok.nextToken();
 						String msg = tok.nextToken();
-						System.out.println("incoming from "+from+": "+msg);
+						gui.addMsg(msg, from);
 					}
 					
 				}

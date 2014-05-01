@@ -99,7 +99,7 @@ public class ServerClientThread extends Thread
 	public void sendMessageFrom(String msg, int from)
 	{
 		messageLock.acquireUninterruptibly();
-		messages.add("msg:"+from+":"+msg);
+		messages.add("msga:"+from+":"+msg);
 		messageLock.release();
 	}
 }
