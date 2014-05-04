@@ -20,6 +20,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import chat.Client;
+
 @SuppressWarnings("serial")
 public class GameBoard extends JPanel
 {
@@ -43,28 +45,49 @@ public class GameBoard extends JPanel
 
 	private int numPlayers;
 
-	public GameBoard(String boardDescFile, int in_numPlayers) {
+	boolean gameStarted;
+	
+	int clientId;
+	
+	Client client;
+	
+	public GameBoard(String boardDescFile, int in_numPlayers, int clientId, Client cliIn) 
+	{
+		this.clientId = clientId;
+		client = cliIn;
 		numPlayers = in_numPlayers;
 		players = new Player[numPlayers];
 		readFile(boardDescFile);
-		initPlayers();
+		initPlayer();
+		curPlayer = 0;
+		gameStarted = false;
 		repaint();
 
 	}
 
 	public void play() {
+		boolean playersInit = true;
 		while (!isGameover()) {
-			if (players[curPlayer].stillPlaying()) {
-				takeTurn();
-			} else {
-				if (curPlayer == players.length - 1) {
-					curPlayer = 0;
-				} else {
-					curPlayer++;
+			playersInit = true;
+			for(Player p :players)
+			{
+				if(p == null)
+				{
+					playersInit = false;
+					break;
 				}
 			}
-			validate();
-			repaint();
+			if(playersInit)
+			{
+				gameStarted = true;
+				
+				if (curPlayer == (clientId-1) && players[curPlayer].stillPlaying()) 
+				{
+					takeTurn();
+				} 
+				validate();
+				repaint();
+			}
 		}
 		for (int i = 0; i < players.length; i++) {
 			if (players[i].stillPlaying()) {
@@ -72,6 +95,7 @@ public class GameBoard extends JPanel
 				break;
 			}
 		}
+		
 	}
 
 	private void takeTurn() {
@@ -90,14 +114,8 @@ public class GameBoard extends JPanel
 		}
 		if (input == "Roll") {
 			int move = rollDice();
+			client.sendRoll(move);
 			makeMove(move);
-			players[curPlayer].getCurrentLocation().landOnSpace(
-					players[curPlayer]);
-			if (curPlayer == players.length - 1) {
-				curPlayer = 0;
-			} else {
-				curPlayer++;
-			}
 		} else if (input == "Buy Upgrades") {
 			showUpgradeDialog();
 		}
@@ -178,6 +196,17 @@ public class GameBoard extends JPanel
 			}
 
 		}
+		
+		players[curPlayer].getCurrentLocation().landOnSpace(players[curPlayer]);
+		if (curPlayer == players.length - 1) 
+		{
+			curPlayer = 0;
+		}
+		else 
+		{
+			curPlayer++;
+		}
+		
 	}
 
 	private int rollDice() {
@@ -194,6 +223,10 @@ public class GameBoard extends JPanel
 	private boolean isGameover() {
 		int stillIn = 0;
 		for (Player p : players) {
+			if(p == null)
+			{
+				return false;
+			}
 			if (p.stillPlaying()) {
 				stillIn++;
 			}
@@ -201,19 +234,32 @@ public class GameBoard extends JPanel
 		return stillIn <= 1;
 	}
 
-	public void initPlayers() {
-		for (int i = 0; i < numPlayers; i++) {
-			players[i] = new Player(boardSpaces.get(0), players);
+	public void initPlayers() 
+	{
+		for (int i = 0; i < numPlayers; i++) 
+		{
+			players[i] = new Player(boardSpaces.get(0), players, i+1);
 		}
 		curPlayer = 0;
+	}
+	
+	public void initPlayer() 
+	{
+		players[clientId-1] = new Player(boardSpaces.get(0), players, clientId-1);
+		client.sendPieceSelection(players[clientId-1].getIconId());
+	}
+	
+	public void initPlayer(int id, int iconId)
+	{
+		players[id-1] = new Player(boardSpaces.get(0), players, id, iconId);
 	}
 
 	public void readFile(String boardDescFile) {
 		boardSpaces = new ArrayList<Space>();
 		Scanner scan = new Scanner("File Not Found");
 		try {
-			scan = new Scanner(new File(boardDescFile));
-		} catch (FileNotFoundException e) {
+			scan = new Scanner(GameBoard.class.getResourceAsStream("/CPUMonopoly.csv"));
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -260,8 +306,12 @@ public class GameBoard extends JPanel
 		Graphics g2 = image.getGraphics();
 		g2.setColor(Color.BLACK);
 		paintBoard(g2);
-		paintPlayerInfo(g2);
-		paintPlayers(g2);
+		if(gameStarted)
+		{
+			paintPlayerInfo(g2);
+			paintPlayers(g2);
+		}
+
 
 		g.clearRect(0, 0, GameDisplay.WIDTH, GameDisplay.HEIGHT);
 		g.drawImage(image, 0, 0, null);

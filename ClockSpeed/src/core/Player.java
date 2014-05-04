@@ -10,11 +10,63 @@ public class Player
 	private int cashBalance;
 	private Space currentLocation;
 	private ImageIcon piece;
+	private int pieceId;
 	private static ArrayList<ImageIcon> pieces = null;
 	private int GPUs = 0;
 	private ArrayList<Property> ownedProperties;
 	
-	public Player(Space location, Player[] players)
+	public Player(Space location, Player[] players, int clientId)
+	{
+		if(pieces ==null)
+		{
+			pieces = new ArrayList<ImageIcon>();
+			pieces.add(new ImageIcon("resources/blb.png"));
+			pieces.add(new ImageIcon("resources/doge.png"));
+			pieces.add(new ImageIcon("resources/picard.png"));
+			pieces.add(new ImageIcon("resources/skeptical.png"));
+			pieces.add(new ImageIcon("resources/wonka.png"));
+			pieces.add(new ImageIcon("resources/potoo.png"));
+			pieces.add(new ImageIcon("resources/mallard.png"));
+			pieces.add(new ImageIcon("resources/oag.png"));
+			pieces.add(new ImageIcon("resources/ggg.png"));
+			pieces.add(new ImageIcon("resources/penguin.png"));
+		}
+		
+		
+		currentLocation = location;
+		ownedProperties = new ArrayList<Property>();
+		cashBalance = 6500;
+		GPUs=0;
+		ImageIcon icon = null;
+		int playerNum = clientId;
+		while(icon == null)
+		{
+			
+			ImageIcon[] choices = new ImageIcon[pieces.size()];
+			for(int i =0;i<pieces.size();i++)
+			{
+				choices[i] = pieces.get(i);
+			}
+			
+		    icon = (ImageIcon) JOptionPane.showInputDialog(null, "Select a piece",
+		        "Player "+playerNum, JOptionPane.QUESTION_MESSAGE, null, // Use
+		                                                                        // default
+		                                                                        // icon
+		        choices, // Array of choices
+		        choices[0]); // Initial choice
+		}
+		piece = icon;
+		for(int i=0;i<pieces.size();i++)
+		{
+			if(pieces.get(i) == piece)
+			{
+				pieceId = i;
+				break;
+			}
+		}
+	}
+	
+	public Player(Space location, Player[] players, int clientId, int id)
 	{
 		if(pieces ==null)
 		{
@@ -37,44 +89,19 @@ public class Player
 		cashBalance = 6500;
 		GPUs=0;
 		ImageIcon icon = null;
-		int playerNum = 1;
-		for(int i=0;i<players.length;i++)
+		int playerNum = clientId;
+
+		ImageIcon[] choices = new ImageIcon[pieces.size()];
+		for(int i =0;i<pieces.size();i++)
 		{
-			if(players[i] == null)
-			{
-				playerNum = i+1;
-				break;
-			}
-			else
-			{
-				players[i].getPiece();
-			}
+			choices[i] = pieces.get(i);
 		}
-		while(icon == null)
-		{
-			
-			ImageIcon[] choices = new ImageIcon[pieces.size()];
-			for(int i =0;i<pieces.size();i++)
-			{
-				choices[i] = pieces.get(i);
-			}
-			
-		    icon = (ImageIcon) JOptionPane.showInputDialog(null, "Select a piece",
-		        "Player "+playerNum, JOptionPane.QUESTION_MESSAGE, null, // Use
-		                                                                        // default
-		                                                                        // icon
-		        choices, // Array of choices
-		        choices[0]); // Initial choice
-		}
-		piece = icon;
-		for(int i=0;i<pieces.size();i++)
-		{
-			if(pieces.get(i) == piece)
-			{
-				pieces.remove(i);
-				break;
-			}
-		}
+		piece = choices[id];
+	}
+	
+	public int getIconId()
+	{
+		return pieceId;
 	}
 	
 	public Space getCurrentLocation() 

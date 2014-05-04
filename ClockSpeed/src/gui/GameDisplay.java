@@ -4,6 +4,7 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
+import chat.Client;
 import core.GameBoard;
 
 public class GameDisplay 
@@ -21,20 +22,24 @@ public class GameDisplay
 	GameBoard board;
 
 	private int numPlayers;
+	int clientId;
 	
-	public GameDisplay(int input)
+	public GameDisplay(int input, int clientId, Client cliIn)
 	{
 		numPlayers = input;
 		container = new JFrame();
 		container.setSize(WIDTH,HEIGHT);
 		container.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		board = new GameBoard("CPUMonopoly.csv", numPlayers);
+		clientId = clientId;
+		board = new GameBoard("CPUMonopoly.csv", numPlayers, clientId, cliIn);
 		board.setPreferredSize(new Dimension(WIDTH,HEIGHT));
 		
 		container.add(board);
 	}
-	
+	public GameBoard getGameBoard()
+	{
+		return board;
+	}
 	public void play()
 	{
 		container.setVisible(true);

@@ -2,6 +2,7 @@ package program;
 
 import javax.swing.JOptionPane;
 
+import chat.Client;
 import chat.ListenServer;
 import gui.*;
 
@@ -11,7 +12,7 @@ public class StartGame
 	{	
 		String input = null;
 		
-		while(input == null)
+		/*while(input == null)
 		{
 			String[] choices = { "2", "3", "4" };
 		    input = (String) JOptionPane.showInputDialog(null, "How Many Players?",
@@ -20,8 +21,21 @@ public class StartGame
 		                                                                        // icon
 		        choices, // Array of choices
 		        choices[0]); // Initial choice
+		}*/
+		Client client = new Client();
+		client.start();
+		while(!client.getStartGame())
+		{
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		GameDisplay  game = new GameDisplay(Integer.parseInt(input));
+		int numPlayers = client.getNumPlayers();
+		GameDisplay  game = new GameDisplay(numPlayers, client.getClientId(), client);
+		client.setGameBoard(game.getGameBoard());
 		game.play();
 	}
 }

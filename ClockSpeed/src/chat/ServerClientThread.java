@@ -48,8 +48,16 @@ public class ServerClientThread extends Thread
 	    	 if(in.ready())
 	        {
 		        String line = in.readLine();
+		        if(line.equals("start"))
+		        {
+		        	for(ServerClientThread recip : connectedClients)
+		    		{
+		    				recip.sendRaw("start:"+connectedClients.size());
+		    		}
+		        }
 		        StringTokenizer tok = new StringTokenizer(line,":");
-		        if(tok.nextToken().equalsIgnoreCase("msg"))
+		        String instruction = tok.nextToken();
+		        if(instruction.equalsIgnoreCase("msg"))
 		        {
 		        	String to = tok.nextToken();
 		        	String msg = tok.nextToken();
@@ -73,6 +81,28 @@ public class ServerClientThread extends Thread
 			    		}
 		        	}
 		        }
+		        else if(instruction.equalsIgnoreCase("icon"))
+		        {
+		        	String iconId = tok.nextToken();
+		        	for(ServerClientThread recip : connectedClients)
+		    		{
+		    			if(recip != this)
+		    				recip.sendIcon(Integer.parseInt(iconId), clientId);
+		    		}
+		        }
+		        else if(instruction.equalsIgnoreCase("roll"))
+		        {
+		        	int spaces = Integer.parseInt(tok.nextToken());
+		        	for(ServerClientThread recip : connectedClients)
+		    		{
+		        		
+		    			if(recip != this)
+		    				recip.sendMove(spaces);
+		    		}
+		        }
+		        
+		        
+		        
 	        }
 	        if(messageLock.tryAcquire())
 			{
@@ -99,10 +129,22 @@ public class ServerClientThread extends Thread
 		messages.add(msg);
 		messageLock.release();
 	}
+	public void sendMove(int spaces)
+	{
+		messageLock.acquireUninterruptibly();
+		messages.add("move:"+spaces);
+		messageLock.release();
+	}
 	public void sendMessage(String msg)
 	{
 		messageLock.acquireUninterruptibly();
 		messages.add("msgp:"+clientId+":"+msg);
+		messageLock.release();
+	}
+	public void sendIcon(int iconId, int from)
+	{
+		messageLock.acquireUninterruptibly();
+		messages.add("icon:"+from+":"+iconId);
 		messageLock.release();
 	}
 	public void sendMessageFrom(String msg, int from, boolean all)

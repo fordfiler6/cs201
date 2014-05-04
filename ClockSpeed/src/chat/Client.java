@@ -13,6 +13,10 @@ import java.util.StringTokenizer;
 import java.util.Vector;
 import java.util.concurrent.Semaphore;
 
+import javax.swing.JOptionPane;
+
+import core.GameBoard;
+
 public class Client extends Thread
 {
 	Socket cSock = null;
@@ -20,19 +24,57 @@ public class Client extends Thread
 	Vector<String> messages;
 	ChatGUI gui;
 	public Semaphore messageLock = new Semaphore(1);
+	boolean startGame;
+	int numPlayers;
+	GameBoard board;
 	public Client()
 	{
 		messages = new Vector<String>();
 		clientId = -1;
 		try
 		{
-			cSock = new Socket("localhost",7890);
+			String input = JOptionPane.showInputDialog("Enter IP Address:");
+			cSock = new Socket(input,7890);
 		}
 		catch(Exception e)
 		{
 			System.out.println("Failed to create Client sockett");
 		}
 		gui = new ChatGUI(this);
+	}
+	public void startGame(int players)
+	{
+		numPlayers = players;
+		startGame = true;
+		
+	}
+	public void setGameBoard(GameBoard in)
+	{
+		board = in;
+	}
+	public int getClientId()
+	{
+		return clientId;
+	}
+	public int getNumPlayers()
+	{
+		return numPlayers;
+	}
+	public boolean getStartGame()
+	{
+		return startGame;
+	}
+	public void sendRoll(int spaces)
+	{
+		messageLock.acquireUninterruptibly();
+		messages.add("roll:"+spaces);
+		messageLock.release();
+	}
+	public void sendStartMessage()
+	{
+		messageLock.acquireUninterruptibly();
+		messages.add("start");
+		messageLock.release();
 	}
 	public void sendMessage(String msg)
 	{
@@ -44,6 +86,12 @@ public class Client extends Thread
 	{
 		messageLock.acquireUninterruptibly();
 		messages.add("msg:"+to+":"+msg);
+		messageLock.release();
+	}
+	public void sendPieceSelection(int id)
+	{
+		messageLock.acquireUninterruptibly();
+		messages.add("icon:"+id);
 		messageLock.release();
 	}
 	public void run()
@@ -86,6 +134,21 @@ public class Client extends Thread
 					if(instruction.equalsIgnoreCase("id"))
 					{
 						clientId = Integer.parseInt(tok.nextToken());
+						boolean startGame = false;
+						if(clientId != 1 && clientId <4)
+						{
+							int input = JOptionPane.showConfirmDialog (null, "There are "+clientId+" players. Start game?","Start Game",JOptionPane.YES_NO_OPTION);
+							if(input == JOptionPane.YES_OPTION)
+							{
+								startGame(clientId);
+								sendStartMessage();
+							}
+						}
+						if(clientId >=4)
+						{
+							startGame(clientId);
+							sendStartMessage();
+						}
 					}
 					else if(instruction.equalsIgnoreCase("msgp"))
 					{
@@ -100,6 +163,33 @@ public class Client extends Thread
 						String msg = tok.nextToken();
 						gui.addMsg(msg, from);
 					}
+					else if(instruction.equalsIgnoreCase("start"))
+					{
+						String numPlayers = tok.nextToken();
+						startGame(Integer.parseInt(numPlayers));
+					}
+					else if(instruction.equalsIgnoreCase("icon"))
+					{
+						int from = Integer.parseInt(tok.nextToken());
+						int id = Integer.parseInt(tok.nextToken());
+						while(board== null)
+						{
+							try
+							{
+								Thread.sleep(100);
+							}
+							catch (Exception e)
+							{
+								
+							}
+						}
+						board.initPlayer(from, id);
+					}
+					else if(instruction.equalsIgnoreCase("move"))
+					{
+						int spaces = Integer.parseInt(tok.nextToken());
+						board.makeMove(spaces);
+					}
 					
 				}
 			} 
@@ -111,5 +201,6 @@ public class Client extends Thread
 			
 		}
 	}
+
 		
 }
