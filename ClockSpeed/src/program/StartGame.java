@@ -2,6 +2,7 @@ package program;
 
 import javax.swing.JOptionPane;
 
+import chat.ListenServer;
 import gui.*;
 
 public class StartGame 
@@ -9,6 +10,7 @@ public class StartGame
 	public static void main(String[] args)
 	{	
 		String input = null;
+		
 		while(input == null)
 		{
 			String[] choices = { "2", "3", "4" };

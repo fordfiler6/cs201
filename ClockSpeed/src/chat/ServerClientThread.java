@@ -49,7 +49,6 @@ public class ServerClientThread extends Thread
 	        {
 		        String line = in.readLine();
 		        StringTokenizer tok = new StringTokenizer(line,":");
-		        System.out.println("I'm server "+clientId+"'s thread");
 		        if(tok.nextToken().equalsIgnoreCase("msg"))
 		        {
 		        	String to = tok.nextToken();
@@ -59,11 +58,21 @@ public class ServerClientThread extends Thread
 			    		for(ServerClientThread recip : connectedClients)
 			    		{
 			    			if(recip != this)
-			    				recip.sendMessageFrom(msg, clientId);
+			    				recip.sendMessageFrom(msg, clientId, true);
+			    		}
+		        	}
+		        	else
+		        	{
+		        		for(ServerClientThread recip : connectedClients)
+			    		{
+		        			if(recip.clientId == Integer.parseInt(to))
+		        			{
+		        				recip.sendMessageFrom(msg, clientId, false);
+		        			}
+			    		
 			    		}
 		        	}
 		        }
-	        	//process message
 	        }
 	        if(messageLock.tryAcquire())
 			{
@@ -93,13 +102,16 @@ public class ServerClientThread extends Thread
 	public void sendMessage(String msg)
 	{
 		messageLock.acquireUninterruptibly();
-		messages.add("msg:"+clientId+":"+msg);
+		messages.add("msgp:"+clientId+":"+msg);
 		messageLock.release();
 	}
-	public void sendMessageFrom(String msg, int from)
+	public void sendMessageFrom(String msg, int from, boolean all)
 	{
 		messageLock.acquireUninterruptibly();
-		messages.add("msga:"+from+":"+msg);
+		if(!all)
+			messages.add("msgp:"+from+":"+clientId+":"+msg);
+		else
+			messages.add("msga:"+from+":"+msg);
 		messageLock.release();
 	}
 }

@@ -144,7 +144,7 @@ public class ChatGUI
                 // do nothing
             }
             else {
-                int to = Integer.parseInt(input.substring(6));
+                int to = Integer.parseInt(input.substring(7));
                 addMsgPrivate(messageBox.getText(), cli.clientId+"", to+"");
                 cli.sendMessageTo(messageBox.getText(), to);
                 messageBox.setText("");
