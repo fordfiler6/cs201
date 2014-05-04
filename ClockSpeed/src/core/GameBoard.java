@@ -125,7 +125,8 @@ public class GameBoard extends JPanel
 			makeMove(Integer.parseInt(input));
 	}
 
-	public void showUpgradeDialog() {
+	public void showUpgradeDialog() 
+	{
 		ArrayList<CPU> choices = new ArrayList<CPU>();
 		for (int i = 0; i < players[curPlayer].getOwnedProperties().size(); i++) {
 			if (players[curPlayer].getOwnedProperties().get(i) instanceof CPU) {
@@ -156,12 +157,28 @@ public class GameBoard extends JPanel
 			for (int i = 0; i < choices.size(); i++) {
 				if (options[i] == input) {
 					choices.get(i).upgrade(players[curPlayer]);
+					client.sendUpgrade(i);
 					break;
 				}
 			}
 		}
 	}
+	
+	public void upgradeSpace(int id)
+	{
+		ArrayList<CPU> choices = new ArrayList<CPU>();
+		for (int i = 0; i < players[curPlayer].getOwnedProperties().size(); i++) {
+			if (players[curPlayer].getOwnedProperties().get(i) instanceof CPU) {
+				CPU temp = (CPU) players[curPlayer].getOwnedProperties().get(i);
+				if (temp.canUpgrade(players[curPlayer])) {
+					choices.add(temp);
+				}
+			}
+		}
 
+		choices.get(id).upgrade(players[curPlayer]);
+
+	}
 	public void makeMove(int move) {
 		int boardLoc = 0;
 		for (int i = 0; i < boardSpaces.size(); i++) {

@@ -190,6 +190,10 @@ public class Client extends Thread
 						int spaces = Integer.parseInt(tok.nextToken());
 						board.makeMove(spaces);
 					}
+					else if(instruction.equalsIgnoreCase("upgrade"))
+					{
+						board.upgradeSpace(Integer.parseInt(tok.nextToken()));
+					}
 					
 				}
 			} 
@@ -200,6 +204,13 @@ public class Client extends Thread
 			}
 			
 		}
+	}
+	public void sendUpgrade(int i) 
+	{
+		messageLock.acquireUninterruptibly();
+		messages.add("upgrade"+i);
+		messageLock.release();
+		
 	}
 
 		

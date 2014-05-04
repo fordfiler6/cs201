@@ -100,7 +100,16 @@ public class ServerClientThread extends Thread
 		    				recip.sendMove(spaces);
 		    		}
 		        }
-		        
+		        else if(instruction.equalsIgnoreCase("upgrade"))
+		        {
+		        	int id = Integer.parseInt(tok.nextToken());
+		        	for(ServerClientThread recip : connectedClients)
+		    		{
+		        		
+		    			if(recip != this)
+		    				recip.sendUpgrade(id);
+		    		}
+		        }
 		        
 		        
 	        }
@@ -122,6 +131,13 @@ public class ServerClientThread extends Thread
 	        System.exit(-1);
 	      }
 	    }
+	}
+	public void sendUpgrade(int id) 
+	{
+		messageLock.acquireUninterruptibly();
+		messages.add("upgrade"+id);
+		messageLock.release();
+		
 	}
 	public void sendRaw(String msg)
 	{
