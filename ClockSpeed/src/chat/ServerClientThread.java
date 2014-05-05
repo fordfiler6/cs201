@@ -110,6 +110,15 @@ public class ServerClientThread extends Thread
 		    				recip.sendUpgrade(id);
 		    		}
 		        }
+		        else if(instruction.equalsIgnoreCase("resign"))
+		        {
+		        	for(ServerClientThread recip : connectedClients)
+		    		{
+		        		
+		    			if(recip != this)
+		    				recip.sendResign();
+		    		}
+		        }
 		        
 		        
 	        }
@@ -132,10 +141,17 @@ public class ServerClientThread extends Thread
 	      }
 	    }
 	}
+	private void sendResign() 
+	{
+		messageLock.acquireUninterruptibly();
+		messages.add("resign:");
+		messageLock.release();
+		
+	}
 	public void sendUpgrade(int id) 
 	{
 		messageLock.acquireUninterruptibly();
-		messages.add("upgrade"+id);
+		messages.add("upgrade:"+id);
 		messageLock.release();
 		
 	}

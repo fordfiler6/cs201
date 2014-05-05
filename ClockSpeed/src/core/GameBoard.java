@@ -85,6 +85,12 @@ public class GameBoard extends JPanel
 				{
 					takeTurn();
 				} 
+				else if(!players[curPlayer].stillPlaying())
+				{
+					curPlayer++;
+					if(curPlayer == players.length)
+						curPlayer=0;
+				}
 				validate();
 				repaint();
 			}
@@ -119,10 +125,16 @@ public class GameBoard extends JPanel
 		} else if (input == "Buy Upgrades") {
 			showUpgradeDialog();
 		}
-		else if (input == "Resign") {
+		else if (input == "Resign") 
+		{
 			players[curPlayer].lose();
+			client.sendResign();
 		} else
 			makeMove(Integer.parseInt(input));
+	}
+	public void resign()
+	{
+		players[curPlayer].lose();
 	}
 
 	public void showUpgradeDialog() 

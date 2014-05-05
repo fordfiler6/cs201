@@ -15,7 +15,6 @@ public class Mine extends Space
 		cards = new ArrayList<Card>();
 		cards.add(new CollectCard("Find a block","Collect $500", 500));
 		cards.add(new DistributedCollectCard("Your pool found a block","Collect $50 in fees from each player", 50, players));
-		Collections.shuffle(cards);
 	}
 	@Override
 	public JPanel drawSpace() {
@@ -31,7 +30,6 @@ public class Mine extends Space
 		if(curCard == cards.size()-1)
 		{
 			curCard =0;
-			Collections.shuffle(cards);
 		}
 		else
 		{

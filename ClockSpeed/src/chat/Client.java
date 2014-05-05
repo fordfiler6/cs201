@@ -194,6 +194,10 @@ public class Client extends Thread
 					{
 						board.upgradeSpace(Integer.parseInt(tok.nextToken()));
 					}
+					else if(instruction.equalsIgnoreCase("resign"))
+					{
+						board.resign();
+					}
 					
 				}
 			} 
@@ -208,7 +212,14 @@ public class Client extends Thread
 	public void sendUpgrade(int i) 
 	{
 		messageLock.acquireUninterruptibly();
-		messages.add("upgrade"+i);
+		messages.add("upgrade:"+i);
+		messageLock.release();
+		
+	}
+	public void sendResign() 
+	{
+		messageLock.acquireUninterruptibly();
+		messages.add("resign:");
 		messageLock.release();
 		
 	}
